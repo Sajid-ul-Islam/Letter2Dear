@@ -8,6 +8,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@300;400;500;600;700&family=Atma:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * {
             margin: 0;
@@ -16,15 +17,21 @@
         }
 
         /* Lucrative Romantic Theme */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Noto Serif Bengali', serif;
-            background: linear-gradient(-45deg, #1a0b2e, #2d1b4e, #4a192c, #2d1b4e);
+            background: linear-gradient(-45deg, #2d1b4e, #1a0b2e, #4a192c, #702f4e, #2d1b4e);
             background-size: 400% 400%;
-            animation: gradientBG 20s ease infinite;
+            animation: gradientBG 15s ease infinite;
             min-height: 100vh;
+            min-height: 100dvh; /* Dynamic viewport height for mobile */
             overflow-x: hidden;
             position: relative;
             color: #ffffff;
+            line-height: 1.6;
         }
 
         /* Glassmorphism Card Enhanced */
@@ -34,6 +41,8 @@
             padding: 4rem;
             max-width: 900px;
             width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
             box-shadow:
                 0 4px 6px rgba(0, 0, 0, 0.1),
                 0 10px 30px rgba(0, 0, 0, 0.2),
@@ -42,8 +51,36 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
-            overflow: hidden;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            scroll-behavior: smooth;
+        }
+
+        .letter-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .letter-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .letter-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 4px;
+        }
+
+        .letter-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 105, 180, 0.7);
+        }
+
+        /* Letter container layout */
+        .letter-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
         }
 
         .letter-content:hover {
@@ -58,24 +95,23 @@
         .paragraph {
             font-family: 'Atma', cursive;
             font-size: 1.8rem;
-            line-height: 2.0;
-            /* Adjusted for better flow without breaks */
+            line-height: 2.2;
+            /* Improved line height for better readability */
             color: rgba(255, 255, 255, 0.95);
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
+            /* Increased spacing between paragraphs */
             opacity: 0;
             transform: translateY(30px);
             transition: all 1s ease;
-            padding-left: 0;
-            /* Centered look */
+            padding: 1.5rem;
+            /* Added padding for better text breathing room */
             text-align: center;
-            /* More romantic alignment */
             white-space: pre-line;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            letter-spacing: 0.5px;
-        }
-
-        .paragraph::before {
-            display: none;
+            letter-spacing: 0.8px;
+            /* Improved letter spacing for better readability */
+            word-spacing: 2px;
+            /* Better word spacing */
         }
 
         /* Remove side bar for cleaner look */
@@ -141,15 +177,20 @@
         }
 
         .paragraph.highlight {
-            font-weight: 600;
-            color: #d63384;
-            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff69b4;
+            font-size: 1.6rem;
             text-align: center;
-            padding: 1rem;
-            border: 2px solid #d63384;
-            border-radius: 10px;
-            background: linear-gradient(45deg, rgba(214, 51, 132, 0.1), rgba(214, 51, 132, 0.05));
-            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.2);
+            padding: 2rem;
+            border: 3px solid #ff69b4;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.15), rgba(214, 51, 132, 0.1));
+            box-shadow: 
+                0 8px 25px rgba(214, 51, 132, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+            line-height: 2.4;
+            letter-spacing: 1px;
         }
 
         /* Footer */
@@ -158,6 +199,14 @@
             text-align: center;
             position: relative;
             z-index: 10;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .start-btn {
@@ -187,8 +236,67 @@
             transform: translateY(0);
         }
 
-        /* Responsive Design */
+        /* Control button for pause/resume */
+        .control-btn {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.8), rgba(255, 141, 161, 0.8));
+            color: white;
+            border: 2px solid rgba(255, 107, 107, 0.6);
+            padding: 1rem;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 1), rgba(255, 141, 161, 1));
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .pause-btn:focus {
+            outline: 3px solid #ff6b6b;
+            outline-offset: 2px;
+        }
+
+        /* Enhanced mobile experience */
         @media (max-width: 768px) {
+            .start-btn {
+                min-height: 48px; /* Minimum touch target size */
+                padding: 1.5rem 3rem;
+                font-size: 1.3rem;
+                border-radius: 60px;
+                margin: 1rem;
+            }
+
+            .letter-content {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+                border-radius: 40px;
+            }
+
+            .progress-container {
+                margin: 0 1rem 2rem;
+                height: 12px;
+                border-radius: 6px;
+            }
+
+            .progress-text {
+                font-size: 1rem;
+                top: -30px;
+            }
+
             .title {
                 font-size: 2rem;
             }
@@ -201,10 +309,6 @@
                 gap: 0.5rem;
             }
 
-            .letter-content {
-                padding: 2rem 1.5rem;
-            }
-
             .paragraph {
                 font-size: 1.1rem;
                 line-height: 1.8;
@@ -215,13 +319,36 @@
                 font-size: 1.2rem;
             }
 
-            .start-btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
+            /* Better touch feedback */
+            .start-btn:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+
+            /* Improve scrolling on mobile */
+            body {
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: none;
             }
         }
 
         @media (max-width: 480px) {
+            .start-btn {
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+                margin: 0.5rem;
+            }
+
+            .letter-content {
+                padding: 1.5rem 1rem;
+                margin: 0 0.5rem;
+            }
+
+            .progress-container {
+                margin: 0 0.5rem 1.5rem;
+                height: 10px;
+            }
+
             .header {
                 padding: 2rem 1rem 1rem;
             }
@@ -247,10 +374,6 @@
                 padding: 1rem;
             }
 
-            .letter-content {
-                padding: 1.5rem 1rem;
-            }
-
             .paragraph {
                 font-size: 1rem;
                 line-height: 1.6;
@@ -266,10 +389,6 @@
                 padding: 0.8rem;
             }
 
-            .start-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
         }
 
         /* Additional floating elements */
@@ -326,6 +445,14 @@
 
         /* Fade in animation for the entire container */
         .container {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 0;
+            box-sizing: border-box;
             animation: fadeIn 1s ease-in;
         }
 
@@ -341,50 +468,149 @@
             }
         }
 
-        /* Typing Cursor Animation */
-        .typing-cursor::after {
-            content: '|';
-            animation: blink 1s step-end infinite;
-            color: #ff6b6b;
-            margin-left: 2px;
+        /* Screen reader only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
-        @keyframes blink {
+        .skip-link {
+            position: absolute;
+            left: 1rem;
+            top: -3rem;
+            z-index: 1000;
+            background: #ffffff;
+            color: #1a0b2e;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: top 0.2s ease;
+        }
 
-            0%,
-            100% {
-                opacity: 1;
+        .skip-link:focus {
+            top: 1rem;
+            outline: 3px solid #ff6b6b;
+            outline-offset: 2px;
+        }
+
+        /* Focus management */
+        .start-btn:focus {
+            outline: 3px solid #ff6b6b;
+            outline-offset: 2px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .progress-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8da1, #ff6b6b);
+            background-size: 200% 100%;
+            animation: progressShine 2s ease-in-out infinite;
+            width: 0%;
+            transition: width 0.8s ease;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            position: absolute;
+            right: 10px;
+            top: -25px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes progressShine {
+            0% {
+                background-position: -200% 0;
             }
+            100% {
+                background-position: 200% 0;
+            }
+        }
 
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(214, 51, 132, 0.2);
+            }
             50% {
-                opacity: 0;
+                transform: scale(1.02);
+                box-shadow: 0 8px 25px rgba(214, 51, 132, 0.4);
+            }
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="background-animation">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="container" aria-label="Romantic letter experience">
+        <div class="background-animation" aria-hidden="true">
             <div class="floating-hearts"></div>
             <div class="floating-flowers"></div>
             <div class="particles"></div>
             <div class="love-symbols"></div>
         </div>
 
-        <header class="header">
+        <header class="header" role="banner">
             <div class="header-decoration">
-                <span class="flower">🌸</span>
+                <span class="flower" aria-hidden="true">🌸</span>
                 <h1 class="title">তোমার জন্য</h1>
-                <span class="flower">🌸</span>
+                <span class="flower" aria-hidden="true">🌸</span>
             </div>
             <p class="subtitle">For My Love 💕</p>
         </header>
 
-        <main class="letter-container">
-            <div class="letter-content">
-                <div class="letter-text" id="letterText">
-                    <p class="paragraph fade-in">হু হবো, শরতের বিশাল নীলাকাশ। তুমি শুভ্র মেঘমালা হয়ে ভাসবে। আমি আমার পাজরে তোমায় আগলে রাখবো। 🌸💕
+        <main class="letter-container" id="main-content" role="main" aria-label="Letter content">
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Letter reading progress">
+                <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+            
+            <div class="letter-content" role="article" aria-label="Romantic letter">
+                <div class="letter-text" id="letterText" aria-live="off" aria-atomic="true">
+                    <p class="paragraph fade-in" data-text="হু হবো, শরতের বিশাল নীলাকাশ। তুমি শুভ্র মেঘমালা হয়ে ভাসবে। আমি আমার পাজরে তোমায় আগলে রাখবো। 🌸💕
 
                         আমার প্রিয়ভাষিণী মীম,
 
@@ -408,24 +634,53 @@
 
                         অথচ তুমিই আমার প্রয়োজন, প্রিয়জন। শুধু কি প্রয়োজন? তুমি তো প্রয়োজন ছেড়ে অনেক অনেক উর্ধ্বে চলে গিয়েছো, তুমি আমার অস্ত্বিত্বের অংশীদার হয়ে গিয়েছে। 🌟
 
-                        তুমি শুধু আমার। তোমার উপর অধিকার শুধু আমার! আমার প্রিয়দর্শিনী! 💕❤️💕</p>
+                        তুমি শুধু আমার। তোমার উপর অধিকার শুধু আমার! আমার প্রিয়দর্শিনী! 💕❤️💕"></p>
                 </div>
             </div>
         </main>
 
-        <footer class="footer">
-            <button class="start-btn" id="startBtn">Begin Your Journey</button>
+        <footer class="footer" role="contentinfo">
+            <div class="button-group">
+                <button class="start-btn" id="startBtn" aria-label="Start reading the romantic letter" aria-describedby="btn-description">Begin Your Journey</button>
+                <button class="control-btn pause-btn" id="pauseBtn" aria-label="Pause animation" title="Pause" style="display: none;">
+                    <span class="pause-icon">⏸</span>
+                </button>
+            </div>
+            <div id="btn-description" class="sr-only">Click to start the animated letter reading experience</div>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
             const paragraphs = document.querySelectorAll('.paragraph');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
             let animationStarted = false;
+            let animationPaused = false;
+            let currentParagraphIndex = 0;
+            const intervalIds = [];
+            let mouseRafId = null;
+            let scrollRafId = null;
 
-            // Create floating hearts dynamically
+            // Performance detection - check for reduced motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const isLowEndDevice =
+                (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency < 4) ||
+                (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory < 4);
+
+            // Create floating hearts dynamically - with performance optimization
             function createFloatingHeart() {
+                // Skip if animations are disabled
+                if (prefersReducedMotion) return;
+
+                // Limit maximum floating elements on screen
+                const maxFloatingElements = isLowEndDevice ? 5 : 15;
+                const currentElements = document.querySelectorAll('.heart, .flower-element, .love-symbol');
+                if (currentElements.length > maxFloatingElements) return;
+
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.innerHTML = '❤️';
@@ -440,8 +695,15 @@
                 }, 4000);
             }
 
-            // Create floating flowers dynamically
+            // Create floating flowers dynamically - with performance optimization
             function createFloatingFlower() {
+                // Skip if animations are disabled
+                if (prefersReducedMotion) return;
+                
+                const maxFloatingElements = isLowEndDevice ? 5 : 15;
+                const currentElements = document.querySelectorAll('.heart, .flower-element, .love-symbol');
+                if (currentElements.length > maxFloatingElements) return;
+
                 const flowers = ['🌸', '🌺', '🌹', '🌷', '🌻'];
                 const flower = document.createElement('div');
                 flower.className = 'flower-element';
@@ -456,8 +718,15 @@
                 }, 6000);
             }
 
-            // Create floating love symbols dynamically
+            // Create floating love symbols dynamically - with performance optimization
             function createFloatingLove() {
+                // Skip if animations are disabled
+                if (prefersReducedMotion) return;
+                
+                const maxFloatingElements = isLowEndDevice ? 5 : 15;
+                const currentElements = document.querySelectorAll('.heart, .flower-element, .love-symbol');
+                if (currentElements.length > maxFloatingElements) return;
+
                 const symbols = ['💕', '💖', '💗', '💝', '💞'];
                 const love = document.createElement('div');
                 love.className = 'love-symbol';
@@ -472,18 +741,40 @@
                 }, 5000);
             }
 
-            // Create floating elements periodically
-            setInterval(createFloatingHeart, 2000);
-            setInterval(createFloatingFlower, 3000);
-            setInterval(createFloatingLove, 2500);
+            // Add screen reader announcements
+            const srAnnouncer = document.createElement('div');
+            srAnnouncer.setAttribute('aria-live', 'polite');
+            srAnnouncer.setAttribute('aria-atomic', 'true');
+            srAnnouncer.className = 'sr-only';
+            document.body.appendChild(srAnnouncer);
+
+            // Function to announce to screen readers
+            function announce(message) {
+                srAnnouncer.textContent = message;
+                setTimeout(() => srAnnouncer.textContent = '', 1000);
+            }
+
+            function setReadingUiState(isReading) {
+                if (isReading) {
+                    startBtn.textContent = 'Reading in Progress...';
+                    startBtn.classList.add('loading');
+                    startBtn.setAttribute('aria-label', 'Letter is currently being read');
+                    startBtn.setAttribute('disabled', 'true');
+                    pauseBtn.style.display = 'inline-flex';
+                    pauseBtn.setAttribute('aria-label', animationPaused ? 'Resume animation' : 'Pause animation');
+                } else {
+                    startBtn.textContent = 'Read Again';
+                    startBtn.classList.remove('loading');
+                    startBtn.setAttribute('aria-label', 'Read the letter again');
+                    startBtn.removeAttribute('disabled');
+                    pauseBtn.style.display = 'none';
+                }
+            }
 
             // Auto-start animation after page loads
             setTimeout(() => {
                 if (!animationStarted) {
                     startLetterAnimation();
-                    animationStarted = true;
-                    startBtn.textContent = 'Reading in Progress...';
-                    startBtn.classList.add('loading');
                 }
             }, 1000); // Start after 1 second
 
@@ -491,39 +782,89 @@
             startBtn.addEventListener('click', function () {
                 if (!animationStarted) {
                     startLetterAnimation();
-                    animationStarted = true;
-                    startBtn.textContent = 'Reading in Progress...';
-                    startBtn.classList.add('loading');
+                    animationPaused = false;
+                }
+            });
+
+            // Pause/Resume button functionality
+            pauseBtn.addEventListener('click', function () {
+                if (animationStarted && !animationPaused) {
+                    // Pause animation
+                    animationPaused = true;
+                    pauseBtn.innerHTML = '<span class="pause-icon">▶</span>';
+                    pauseBtn.setAttribute('aria-label', 'Resume animation');
+                    announce('Animation paused. Click pause button to resume.');
+                } else if (animationStarted && animationPaused) {
+                    // Resume animation
+                    animationPaused = false;
+                    pauseBtn.innerHTML = '<span class="pause-icon">⏸</span>';
+                    pauseBtn.setAttribute('aria-label', 'Pause animation');
+                    announce('Animation resumed.');
                 }
             });
 
             // Animate letter paragraphs sequentially
             async function startLetterAnimation() {
-                for (let i = 0; i < paragraphs.length; i++) {
+                if (animationStarted) return;
+                animationStarted = true;
+                animationPaused = false;
+                announce('Starting romantic letter animation. Please wait while the letter is being revealed.');
+                setReadingUiState(true);
+
+                // Show progress bar
+                progressContainer.classList.add('visible');
+                progressContainer.setAttribute('aria-valuenow', '0');
+                progressBar.style.width = '0%';
+                progressText.textContent = '0%';
+
+                currentParagraphIndex = 0;
+                await animateParagraphsFrom(0);
+            }
+
+            async function waitForResume() {
+                while (animationPaused) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+            }
+
+            async function animateParagraphsFrom(startIndex) {
+                for (let i = startIndex; i < paragraphs.length; i++) {
+                    await waitForResume();
+                    currentParagraphIndex = i;
+
                     const paragraph = paragraphs[i];
+                    const progress = Math.round(((i + 1) / paragraphs.length) * 100);
 
-                    // Add fade-in class to make it visible (but empty content initially handled by typewriter)
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = progress + '%';
+                    progressContainer.setAttribute('aria-valuenow', progress.toString());
+
+                    if (i === 0 || i === paragraphs.length - 1 || (i + 1) % 3 === 0) {
+                        announce(`Reading paragraph ${i + 1} of ${paragraphs.length}. ${progress}% complete.`);
+                    }
+
                     paragraph.classList.add('fade-in');
-
-                    // Create burst of effects
                     createBurstEffect();
-
-                    // Wait for typing to complete before showing next paragraph
                     await typewriterEffect(paragraph);
 
-                    // Add special effect to the highlight paragraph after typing
                     if (paragraph.classList.contains('highlight')) {
                         createSpecialEffect();
                     }
 
-                    // Small pause between paragraphs
                     await new Promise(resolve => setTimeout(resolve, 500));
                 }
 
-                // Re-enable button after animation completes
-                startBtn.textContent = 'Read Again';
-                startBtn.classList.remove('loading');
+                progressBar.style.width = '100%';
+                progressText.textContent = '100%';
+                progressContainer.setAttribute('aria-valuenow', '100');
+
+                setTimeout(() => {
+                    progressContainer.classList.remove('visible');
+                }, 2000);
+
                 animationStarted = false;
+                setReadingUiState(false);
+                announce('Letter reading complete. You can now read it again or navigate the page.');
             }
 
             // Realistic Typewriter effect
@@ -542,6 +883,11 @@
                     let i = 0;
 
                     function typeChar() {
+                        if (animationPaused) {
+                            setTimeout(typeChar, 100);
+                            return;
+                        }
+
                         if (i < text.length) {
                             element.textContent += text.charAt(i);
                             i++;
@@ -594,107 +940,176 @@
                 }
             }
 
-            // Add keyboard navigation
+            // Enhanced keyboard navigation
             document.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.key === ' ') {
+                // Space or Enter to start/stop animation
+                if ((e.key === 'Enter' || e.key === ' ') && document.activeElement === startBtn) {
                     e.preventDefault();
-                    if (!animationStarted) {
-                        startBtn.click();
-                    }
+                    startBtn.click();
+                    return;
+                }
+                
+                // Escape to stop animation if running
+                if (e.key === 'Escape' && animationStarted) {
+                    e.preventDefault();
+                    // Could add pause functionality here
+                    announce('Animation paused. Press Enter or Space to resume.');
+                    return;
+                }
+                
+                // Arrow keys for navigation (future enhancement)
+                if (e.key === 'ArrowDown' && !animationStarted) {
+                    e.preventDefault();
+                    startBtn.focus();
+                    announce('Focused on start button');
                 }
             });
 
-            // Add mouse move effect for subtle parallax
+            // Add mouse move effect for subtle parallax (throttled)
             document.addEventListener('mousemove', function (e) {
-                const x = e.clientX / window.innerWidth;
-                const y = e.clientY / window.innerHeight;
+                if (mouseRafId !== null) return;
+                mouseRafId = requestAnimationFrame(() => {
+                    const x = e.clientX / window.innerWidth;
+                    const y = e.clientY / window.innerHeight;
 
-                const floatingHearts = document.querySelector('.floating-hearts');
-                const particles = document.querySelector('.particles');
+                    const floatingHearts = document.querySelector('.floating-hearts');
+                    const particles = document.querySelector('.particles');
 
-                if (floatingHearts) {
-                    floatingHearts.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
-                }
-                if (particles) {
-                    particles.style.transform = `translate(${-x * 5}px, ${-y * 5}px)`;
-                }
-            });
+                    if (floatingHearts) {
+                        floatingHearts.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+                    }
+                    if (particles) {
+                        particles.style.transform = `translate(${-x * 5}px, ${-y * 5}px)`;
+                    }
+                    mouseRafId = null;
+                });
+            }, { passive: true });
 
-            // Add scroll-based animations
+            // Add scroll-based animations (throttled)
             let lastScrollY = window.scrollY;
             window.addEventListener('scroll', function () {
-                const currentScrollY = window.scrollY;
-                const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+                if (scrollRafId !== null) return;
+                scrollRafId = requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
 
-                // Add subtle effects based on scroll direction
-                const letterContent = document.querySelector('.letter-content');
-                if (letterContent) {
-                    if (scrollDirection === 'down') {
-                        letterContent.style.transform = `translateY(${Math.min(currentScrollY * 0.1, 20)}px)`;
-                    } else {
-                        letterContent.style.transform = `translateY(${Math.max(currentScrollY * 0.1, -20)}px)`;
+                    const letterContent = document.querySelector('.letter-content');
+                    if (letterContent) {
+                        if (scrollDirection === 'down') {
+                            letterContent.style.transform = `translateY(${Math.min(currentScrollY * 0.1, 20)}px)`;
+                        } else {
+                            letterContent.style.transform = `translateY(${Math.max(currentScrollY * 0.1, -20)}px)`;
+                        }
+                    }
+
+                    lastScrollY = currentScrollY;
+                    scrollRafId = null;
+                });
+            }, { passive: true });
+
+            // Enhanced touch support for mobile devices
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchStartTime = 0;
+            let isSwiping = false;
+
+            // Touch start handler
+            document.addEventListener('touchstart', function (e) {
+                if (e.touches.length === 1) { // Single touch only
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    touchStartTime = Date.now();
+                    isSwiping = false;
+                }
+            }, { passive: true });
+
+            // Touch move handler for swipe detection
+            document.addEventListener('touchmove', function (e) {
+                if (e.touches.length === 1 && touchStartTime) {
+                    const touchCurrentX = e.touches[0].clientX;
+                    const touchCurrentY = e.touches[0].clientY;
+                    const deltaX = touchCurrentX - touchStartX;
+                    const deltaY = touchCurrentY - touchStartY;
+                    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                    // Detect swipe if moved more than 30px
+                    if (distance > 30) {
+                        isSwiping = true;
+                    }
+                }
+            }, { passive: true });
+
+            // Touch end handler
+            document.addEventListener('touchend', function (e) {
+                if (!touchStartTime) return;
+
+                const touchEndTime = Date.now();
+                const touchDuration = touchEndTime - touchStartTime;
+
+                if (e.changedTouches.length === 1 && !isSwiping) {
+                    const touchEndX = e.changedTouches[0].clientX;
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const deltaX = touchEndX - touchStartX;
+                    const deltaY = touchEndY - touchStartY;
+                    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                    // Tap gesture (quick touch, minimal movement)
+                    if (touchDuration < 300 && distance < 10 && !animationStarted) {
+                        startBtn.click();
+                        announce('Animation started via tap gesture');
+                        // Simulate haptic feedback
+                        if (navigator.vibrate) {
+                            navigator.vibrate(50);
+                        }
+                    }
+                } else if (isSwiping) {
+                    // Swipe gestures
+                    const deltaX = e.changedTouches[0].clientX - touchStartX;
+                    const deltaY = e.changedTouches[0].clientY - touchStartY;
+                    const absDeltaX = Math.abs(deltaX);
+                    const absDeltaY = Math.abs(deltaY);
+
+                    // Determine swipe direction
+                    if (absDeltaX > absDeltaY && absDeltaX > 50) {
+                        // Horizontal swipe
+                        if (deltaX > 0) {
+                            // Swipe right - could be used for navigation
+                            announce('Swipe right detected');
+                        } else {
+                            // Swipe left - could be used for navigation
+                            announce('Swipe left detected');
+                        }
+                    } else if (absDeltaY > absDeltaX && absDeltaY > 50) {
+                        // Vertical swipe
+                        if (deltaY < 0 && !animationStarted) {
+                            // Swipe up to start animation
+                            startLetterAnimation();
+                            announce('Animation started via swipe up gesture');
+                            // Simulate haptic feedback
+                            if (navigator.vibrate) {
+                                navigator.vibrate([50, 50, 50]);
+                            }
+                        } else if (deltaY > 0) {
+                            // Swipe down - could scroll to top or pause
+                            announce('Swipe down detected');
+                        }
                     }
                 }
 
-                lastScrollY = currentScrollY;
-            });
+                // Reset touch variables
+                touchStartX = 0;
+                touchStartY = 0;
+                touchStartTime = 0;
+                isSwiping = false;
+            }, { passive: true });
 
-            // Add rainbow animation for highlight paragraph
-            const style = document.createElement('style');
-            style.textContent = `
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 5px 15px rgba(214, 51, 132, 0.2);
-            }
-            50% {
-                transform: scale(1.02);
-                box-shadow: 0 8px 25px rgba(214, 51, 132, 0.4);
-            }
-        }
-        
-        @keyframes rainbow {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-    `;
-            document.head.appendChild(style);
-
-            // Auto-start animation after a delay
-            setTimeout(() => {
-                if (!animationStarted) {
-                    startLetterAnimation();
-                    animationStarted = true;
-                    startBtn.textContent = 'Reading in Progress...';
-                    startBtn.classList.add('loading');
-                }
-            }, 1000);
-
-            // Add touch support for mobile devices
-            let touchStartY = 0;
+            // Prevent default touch behaviors that might interfere
             document.addEventListener('touchstart', function (e) {
-                touchStartY = e.touches[0].clientY;
-            });
-
-            document.addEventListener('touchend', function (e) {
-                const touchEndY = e.changedTouches[0].clientY;
-                const swipeDistance = touchStartY - touchEndY;
-
-                // Swipe up to start animation
-                if (Math.abs(swipeDistance) > 50 && !animationStarted) {
-                    startLetterAnimation();
-                    animationStarted = true;
-                    startBtn.textContent = 'Reading in Progress...';
-                    startBtn.classList.add('loading');
+                // Only prevent if it's a potential gesture
+                if (e.touches.length > 1) {
+                    e.preventDefault();
                 }
-            });
+            }, { passive: false });
 
             // Create additional visual effects
             function createSparkle() {
@@ -733,8 +1148,37 @@
                 }, 15000);
             }
 
-            // Create fireflies periodically
-            setInterval(createFirefly, 1000);
+            function stopAmbientEffects() {
+                while (intervalIds.length) {
+                    clearInterval(intervalIds.pop());
+                }
+            }
+
+            function startAmbientEffects() {
+                if (prefersReducedMotion || intervalIds.length) return;
+
+                const heartInterval = isLowEndDevice ? 4000 : 2000;
+                const flowerInterval = isLowEndDevice ? 5000 : 3000;
+                const loveInterval = isLowEndDevice ? 4000 : 2500;
+                const fireflyInterval = isLowEndDevice ? 2000 : 1000;
+
+                intervalIds.push(setInterval(createFloatingHeart, heartInterval));
+                intervalIds.push(setInterval(createFloatingFlower, flowerInterval));
+                intervalIds.push(setInterval(createFloatingLove, loveInterval));
+                intervalIds.push(setInterval(createFirefly, fireflyInterval));
+            }
+
+            startAmbientEffects();
+
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    stopAmbientEffects();
+                } else {
+                    startAmbientEffects();
+                }
+            });
+
+            window.addEventListener('beforeunload', stopAmbientEffects);
 
             console.log('Romantic Letter Animation Loaded Successfully! ❤️');
         });
