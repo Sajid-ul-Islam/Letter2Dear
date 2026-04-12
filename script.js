@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const startBtn = document.getElementById('startBtn');
     const themeBtns = document.querySelectorAll('.theme-btn');
     const shareStatus = document.getElementById('shareStatus');
+    const shareOptions = document.getElementById('shareOptions');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const telegramBtn = document.getElementById('telegramBtn');
     
     let currentTheme = 'default';
     let animationStarted = false;
@@ -111,8 +114,24 @@ document.addEventListener('DOMContentLoaded', function () {
             url.searchParams.set('msg', encoded);
             url.searchParams.set('theme', currentTheme);
             
-            navigator.clipboard.writeText(url.toString()).then(() => {
+            const shareUrl = url.toString();
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
                 shareStatus.textContent = "Link copied to clipboard! 💝";
+                shareOptions.style.display = 'flex';
+                
+                // WhatsApp Share
+                whatsappBtn.onclick = () => {
+                    const text = encodeURIComponent("I have written a special letter for you... 💖\n\nRead it here: " + shareUrl);
+                    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+                };
+
+                // Telegram Share
+                telegramBtn.onclick = () => {
+                    const text = encodeURIComponent("I have written a special letter for you... 💖");
+                    window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${text}`, '_blank');
+                };
+
                 setTimeout(() => shareStatus.textContent = "", 3000);
             });
         } catch (e) {

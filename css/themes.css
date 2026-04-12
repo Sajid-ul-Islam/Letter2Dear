@@ -1,0 +1,69 @@
+:root {
+    --primary-gradient: linear-gradient(135deg, #ff3366, #ff6b81);
+    --bg-gradient: linear-gradient(-45deg, #2d1b4e, #1a0b2e, #4a192c, #702f4e, #2d1b4e);
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --text-color: #ffffff;
+    --accent-color: #ff3366;
+}
+
+/* Theme Variations */
+body.theme-sunset {
+    --bg-gradient: linear-gradient(-45deg, #ff5f6d, #ffc371, #ff5f6d);
+    --primary-gradient: linear-gradient(135deg, #e94057, #f27121);
+    --accent-color: #e94057;
+}
+
+body.theme-ocean {
+    --bg-gradient: linear-gradient(-45deg, #2193b0, #6dd5ed, #2193b0);
+    --primary-gradient: linear-gradient(135deg, #00b4db, #0083b0);
+    --accent-color: #00b4db;
+}
+
+body.theme-forest {
+    --bg-gradient: linear-gradient(-45deg, #11998e, #38ef7d, #11998e);
+    --primary-gradient: linear-gradient(135deg, #00b09b, #96c93d);
+    --accent-color: #00b09b;
+}
+
+body.theme-lavender {
+    --bg-gradient: linear-gradient(-45deg, #834d9b, #d04ed6, #834d9b);
+    --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+    --accent-color: #6a11cb;
+}
+
+body.theme-sakura {
+    --bg-gradient: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ff9a9e);
+    --primary-gradient: linear-gradient(135deg, #f093fb, #f5576c);
+    --accent-color: #f5576c;
+}
+
+body.theme-galaxy {
+    --bg-gradient: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+    --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+    --accent-color: #7d5fff;
+}
+
+body.theme-rose {
+    --bg-gradient: linear-gradient(-45deg, #4b0000, #a80000, #4b0000);
+    --primary-gradient: linear-gradient(135deg, #ff0844, #ffb199);
+    --accent-color: #ff0844;
+}
+
+body.theme-vintage {
+    --bg-gradient: linear-gradient(-45deg, #d4ae8d, #e9d5ca, #d4ae8d);
+    --primary-gradient: linear-gradient(135deg, #6d4c41, #8d6e63);
+    --accent-color: #5d4037;
+    --text-color: #2d1b1b;
+}
+
+body.theme-vintage .glass-card {
+    background: rgba(255, 255, 255, 0.4);
+    color: #2d1b1b;
+}
+
+body.theme-vintage textarea {
+    color: #2d1b1b;
+    border-color: rgba(0,0,0,0.1);
+}
+

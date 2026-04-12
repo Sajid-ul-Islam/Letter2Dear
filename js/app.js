@@ -1,0 +1,178 @@
+import { Utils } from './utils.js';
+import { Effects } from './effects.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Elements ---
+    const elements = {
+        editorMode: document.getElementById('editorMode'),
+        viewerMode: document.getElementById('viewerMode'),
+        letterInput: document.getElementById('letterInput'),
+        letterText: document.getElementById('letterText'),
+        generateLinkBtn: document.getElementById('generateLinkBtn'),
+        previewBtn: document.getElementById('previewBtn'),
+        backToEditor: document.getElementById('backToEditor'),
+        startBtn: document.getElementById('startBtn'),
+        themeBtns: document.querySelectorAll('.theme-btn'),
+        shareStatus: document.getElementById('shareStatus'),
+        shareOptions: document.getElementById('shareOptions'),
+        whatsappBtn: document.getElementById('whatsappBtn'),
+        telegramBtn: document.getElementById('telegramBtn'),
+        pageTitle: document.getElementById('pageTitle'),
+        pageSubtitle: document.getElementById('pageSubtitle')
+    };
+
+    let state = {
+        currentTheme: 'default',
+        isAnimating: false
+    };
+
+    // --- Core Logic ---
+
+    const setTheme = (theme) => {
+        state.currentTheme = theme;
+        document.body.className = `theme-${theme}`;
+        elements.themeBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+        });
+    };
+
+    const showEditor = () => {
+        elements.editorMode.style.display = 'flex';
+        elements.viewerMode.style.display = 'none';
+        elements.backToEditor.style.display = 'none';
+        elements.startBtn.style.display = 'none';
+        elements.pageTitle.textContent = "তোমার জন্য";
+        elements.pageSubtitle.textContent = "Create Your Masterpiece";
+    };
+
+    const showViewer = (msg) => {
+        elements.editorMode.style.display = 'none';
+        elements.viewerMode.style.display = 'flex';
+        elements.backToEditor.style.display = 'inline-block';
+        elements.startBtn.style.display = 'inline-block';
+        elements.startBtn.textContent = 'Begin Your Journey';
+        elements.pageSubtitle.textContent = "For My Love 💕";
+        
+        elements.letterText.innerHTML = '';
+        const lines = msg.split('\n').filter(line => line.trim() !== '');
+        lines.forEach(line => {
+            const p = document.createElement('p');
+            p.className = 'paragraph';
+            p.textContent = line;
+            elements.letterText.appendChild(p);
+        });
+    };
+
+    const startLetterAnimation = async () => {
+        if (state.isAnimating) return;
+        
+        const paragraphs = document.querySelectorAll('.paragraph');
+        state.isAnimating = true;
+        elements.startBtn.textContent = 'Reading...';
+        elements.startBtn.classList.add('loading');
+
+        for (const p of paragraphs) {
+            p.classList.add('fade-in');
+            Effects.createBurst();
+            await Effects.typewriterEffect(p);
+            await new Promise(r => setTimeout(r, 600));
+        }
+
+        elements.startBtn.textContent = 'Read Again';
+        elements.startBtn.classList.remove('loading');
+        state.isAnimating = false;
+    };
+
+    // --- Init ---
+
+    const init = async () => {
+        Effects.initBackground();
+
+        const msgParam = Utils.getQueryParam('msg');
+        const themeParam = Utils.getQueryParam('theme');
+        const passParam = Utils.getQueryParam('p');
+        const atmosphereParam = Utils.getQueryParam('a');
+
+        if (msgParam) {
+            const decoded = Utils.decodeMessage(msgParam);
+            if (decoded) {
+                // Password check
+                if (passParam) {
+                    const input = prompt("This letter is password protected. Enter the secret word:");
+                    if (input !== passParam) {
+                        alert("Wrong password!");
+                        window.location.search = "";
+                        return;
+                    }
+                }
+
+                elements.letterInput.value = decoded;
+                if (themeParam) setTheme(themeParam);
+                if (atmosphereParam) Effects.setAtmosphere(atmosphereParam);
+                showViewer(decoded);
+            } else {
+                showEditor();
+            }
+        } else {
+            showEditor();
+        }
+
+        // Listeners
+        elements.themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => setTheme(btn.getAttribute('data-theme')));
+        });
+
+        elements.previewBtn.addEventListener('click', () => {
+            const msg = elements.letterInput.value.trim();
+            const atmosphere = document.getElementById('atmosphereSelect').value;
+            if (msg) {
+                if (atmosphere !== 'none') Effects.setAtmosphere(atmosphere);
+                showViewer(msg);
+            }
+            else alert("Write something first! ❤️");
+        });
+
+        elements.backToEditor.addEventListener('click', showEditor);
+
+        elements.startBtn.addEventListener('click', startLetterAnimation);
+
+        elements.generateLinkBtn.addEventListener('click', async () => {
+            const msg = elements.letterInput.value.trim();
+            if (!msg) return alert("Write a message first!");
+
+            const encoded = Utils.encodeMessage(msg);
+            if (!encoded) return alert("Message too long!");
+
+            const password = document.getElementById('letterPass').value.trim();
+            const atmosphere = document.getElementById('atmosphereSelect').value;
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('msg', encoded);
+            url.searchParams.set('theme', state.currentTheme);
+            if (password) url.searchParams.set('p', password);
+            if (atmosphere !== 'none') url.searchParams.set('a', atmosphere);
+            
+            elements.shareStatus.textContent = "Shortening link... ⏳";
+            const shareUrl = await Utils.shortenUrl(url.toString());
+
+            if (await Utils.copyToClipboard(shareUrl)) {
+                elements.shareStatus.textContent = "Short link copied! 💝";
+                elements.shareOptions.style.display = 'flex';
+
+                elements.whatsappBtn.onclick = () => {
+                    const text = encodeURIComponent("I have written a special letter for you... 💖\n\nRead it here: " + shareUrl);
+                    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+                };
+
+                elements.telegramBtn.onclick = () => {
+                    const text = encodeURIComponent("I have written a special letter for you... 💖");
+                    window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${text}`, '_blank');
+                };
+
+                setTimeout(() => elements.shareStatus.textContent = "", 4000);
+            }
+        });
+    };
+
+    init();
+});

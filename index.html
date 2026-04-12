@@ -8,7 +8,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@300;400;500;600;700&family=Atma:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/core.css">
 </head>
 
 <body class="theme-default">
@@ -47,12 +48,42 @@
                         <button class="theme-btn" data-theme="ocean" style="background: linear-gradient(135deg, #2193b0, #6dd5ed);">Ocean</button>
                         <button class="theme-btn" data-theme="forest" style="background: linear-gradient(135deg, #11998e, #38ef7d);">Forest</button>
                         <button class="theme-btn" data-theme="lavender" style="background: linear-gradient(135deg, #834d9b, #d04ed6);">Lavender</button>
+                        <button class="theme-btn" data-theme="rose" style="background: linear-gradient(135deg, #ff0844, #ffb199);">Rose</button>
+                        <button class="theme-btn" data-theme="galaxy" style="background: linear-gradient(135deg, #0f0c29, #302b63);">Galaxy</button>
+                        <button class="theme-btn" data-theme="sakura" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);">Sakura</button>
+                        <button class="theme-btn" data-theme="vintage" style="background: linear-gradient(135deg, #d4ae8d, #e9d5ca);">Vintage</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label>Password Protection (Optional)</label>
+                        <input type="password" id="letterPass" placeholder="Secret word...">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Atmosphere</label>
+                        <select id="atmosphereSelect">
+                            <option value="none">None</option>
+                            <option value="rain">Soft Rain</option>
+                            <option value="piano">Gentle Piano</option>
+                            <option value="stars">Starry Night</option>
+                            <option value="birds">Morning Birds</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="editor-actions">
                     <button class="primary-btn" id="previewBtn">Preview Letter</button>
-                    <button class="primary-btn share-btn" id="generateLinkBtn">Generate & Copy Link</button>
+                    <button class="primary-btn share-btn" id="generateLinkBtn">Shorten & Copy Link</button>
+                </div>
+
+                <div class="share-options" id="shareOptions" style="display: none;">
+                    <button class="social-btn whatsapp-btn" id="whatsappBtn">
+                        <span class="btn-icon">💬</span> WhatsApp
+                    </button>
+                    <button class="social-btn telegram-btn" id="telegramBtn">
+                        <span class="btn-icon">✈️</span> Telegram
+                    </button>
                 </div>
                 
                 <div id="shareStatus" class="share-status"></div>
@@ -74,7 +105,7 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 
 </html>
