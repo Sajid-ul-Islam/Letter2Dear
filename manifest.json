@@ -1,0 +1,17 @@
+{
+  "name": "To My Heart - Premium Letters",
+  "short_name": "ToMyHeart",
+  "description": "Create and share beautiful, encrypted love letters.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#2d1b4e",
+  "theme_color": "#ff3366",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2589/2589175.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

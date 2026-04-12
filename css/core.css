@@ -325,6 +325,18 @@ textarea:focus, input:focus, select:focus {
     font-weight: 700;
 }
 
+@media (max-width: 480px) {
+    .start-btn {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 85%;
+        z-index: 100;
+    }
+}
+
+
 /* Background Decorations */
 .background-animation {
     position: fixed;
@@ -369,12 +381,152 @@ textarea:focus, input:focus, select:focus {
 }
 
 @media (max-width: 768px) {
-    .title { font-size: 2.2rem; }
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    .title { font-size: 2.5rem; }
     .subtitle { font-size: 1.1rem; }
-    .letter-content { padding: 2rem 1.5rem; }
-    .paragraph { font-size: 1.3rem; line-height: 1.8; }
-    .editor-card { padding: 1.5rem; }
-    textarea { height: 200px; }
+    .letter-container { 
+        padding: 2.5rem 1rem; 
+        width: 100%;
+        flex-direction: column;
+    }
+    .letter-area { width: 95%; }
+    .paragraph { 
+        font-size: 1.4rem; 
+        line-height: 1.7; 
+        margin-bottom: 2rem;
+        padding-left: 1.5rem;
+    }
+    .editor-card { 
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    textarea { height: 180px; }
+    
+    .primary-btn, .social-btn {
+        padding: 1.2rem;
+        font-size: 1.1rem;
+    }
+
+    .theme-btn {
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Envelope & Opening Animation */
+.envelope-wrapper {
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.envelope {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background: #fdfdfd;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border-radius: 0 0 10px 10px;
+}
+
+.envelope .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fdfdfd;
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+    z-index: 3;
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.envelope .body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fdfdfd;
+    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%);
+    z-index: 2;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.letter-area {
+    width: 90%;
+    max-width: 900px;
+    animation: slideUpFade 0.8s ease-out;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Polaroid Styling */
+.polaroid-frame {
+    background: white;
+    padding: 1rem 1rem 3rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 250px;
+    margin: 0 auto 3rem;
+    transform: rotate(-3deg);
+    border-radius: 2px;
+}
+
+.polaroid-frame img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    filter: sepia(0.2) contrast(1.1);
+}
+
+.polaroid-text {
+    font-family: 'Atma', cursive;
+    color: #333;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Locked Screen */
+.locked-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.locked-card {
+    text-align: center;
+    padding: 3rem;
+    max-width: 450px;
+}
+
+.lock-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.unlock-countdown {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 1.5rem 0;
+    font-family: monospace;
+    color: var(--accent-color);
 }
 
 /* Typing Cursor */

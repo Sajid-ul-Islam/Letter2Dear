@@ -6,11 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const elements = {
         editorMode: document.getElementById('editorMode'),
         viewerMode: document.getElementById('viewerMode'),
+        lockedMode: document.getElementById('lockedMode'),
+        letterArea: document.getElementById('letterArea'),
+        envelopeWrapper: document.getElementById('envelopeWrapper'),
+        openEnvelopeBtn: document.getElementById('openEnvelopeBtn'),
         letterInput: document.getElementById('letterInput'),
         letterText: document.getElementById('letterText'),
         generateLinkBtn: document.getElementById('generateLinkBtn'),
         previewBtn: document.getElementById('previewBtn'),
         backToEditor: document.getElementById('backToEditor'),
+        backToHome: document.getElementById('backToHome'),
         startBtn: document.getElementById('startBtn'),
         themeBtns: document.querySelectorAll('.theme-btn'),
         shareStatus: document.getElementById('shareStatus'),
@@ -18,13 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
         whatsappBtn: document.getElementById('whatsappBtn'),
         telegramBtn: document.getElementById('telegramBtn'),
         pageTitle: document.getElementById('pageTitle'),
-        pageSubtitle: document.getElementById('pageSubtitle')
+        pageSubtitle: document.getElementById('pageSubtitle'),
+        countdownTimer: document.getElementById('countdownTimer')
     };
 
     let state = {
         currentTheme: 'default',
-        isAnimating: false
+        isAnimating: false,
+        cachedMsg: null
     };
+
+    // --- Safety Check ---
+    for (let key in elements) {
+        if (!elements[key] && key !== 'themeBtns') {
+            console.warn(`Element ${key} not found in HTML!`);
+        }
+    }
 
     // --- Core Logic ---
 
@@ -39,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const showEditor = () => {
         elements.editorMode.style.display = 'flex';
         elements.viewerMode.style.display = 'none';
+        elements.lockedMode.style.display = 'none';
         elements.backToEditor.style.display = 'none';
         elements.startBtn.style.display = 'none';
         elements.pageTitle.textContent = "তোমার জন্য";
@@ -83,6 +98,41 @@ document.addEventListener('DOMContentLoaded', () => {
         state.isAnimating = false;
     };
 
+    const showLocked = (targetDate) => {
+        elements.editorMode.style.display = 'none';
+        elements.viewerMode.style.display = 'none';
+        elements.lockedMode.style.display = 'flex';
+        
+        const updateTimer = () => {
+            const now = new Date();
+            const diff = targetDate - now;
+            if (diff <= 0) {
+                window.location.reload();
+                return;
+            }
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            elements.countdownTimer.textContent = `${h}h ${m}m ${s}s`;
+        };
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    };
+
+    const showEnvelope = () => {
+        elements.editorMode.style.display = 'none';
+        elements.viewerMode.style.display = 'flex';
+        elements.envelopeWrapper.style.display = 'flex';
+        elements.envelopeWrapper.style.opacity = '1';
+        elements.letterArea.style.display = 'none';
+        elements.backToEditor.style.display = 'inline-block';
+        elements.startBtn.style.display = 'none';
+        
+        const env = document.querySelector('.envelope');
+        if (env) env.classList.remove('open');
+        if (elements.openEnvelopeBtn) elements.openEnvelopeBtn.style.display = 'block';
+    };
+
     // --- Init ---
 
     const init = async () => {
@@ -92,11 +142,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const themeParam = Utils.getQueryParam('theme');
         const passParam = Utils.getQueryParam('p');
         const atmosphereParam = Utils.getQueryParam('a');
+        const dateParam = Utils.getQueryParam('d');
+        const imgParam = Utils.getQueryParam('img');
 
         if (msgParam) {
             const decoded = Utils.decodeMessage(msgParam);
             if (decoded) {
-                // Password check
+                state.cachedMsg = decoded;
+                
+                if (dateParam) {
+                    const unlockDate = new Date(dateParam);
+                    if (new Date() < unlockDate) {
+                        showLocked(unlockDate);
+                        return;
+                    }
+                }
+
                 if (passParam) {
                     const input = prompt("This letter is password protected. Enter the secret word:");
                     if (input !== passParam) {
@@ -106,10 +167,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                elements.letterInput.value = decoded;
                 if (themeParam) setTheme(themeParam);
                 if (atmosphereParam) Effects.setAtmosphere(atmosphereParam);
-                showViewer(decoded);
+                if (imgParam) {
+                    const imgEl = document.getElementById('letterImage');
+                    if (imgEl) {
+                        imgEl.src = decodeURIComponent(imgParam);
+                        document.getElementById('polaroid').style.display = 'block';
+                    }
+                }
+                
+                showEnvelope();
             } else {
                 showEditor();
             }
@@ -117,40 +185,69 @@ document.addEventListener('DOMContentLoaded', () => {
             showEditor();
         }
 
-        // Listeners
+        elements.openEnvelopeBtn?.addEventListener('click', () => {
+            const env = document.querySelector('.envelope');
+            if (env) env.classList.add('open');
+            elements.openEnvelopeBtn.style.display = 'none';
+            
+            setTimeout(() => {
+                elements.envelopeWrapper.style.opacity = '0';
+                setTimeout(() => {
+                    elements.envelopeWrapper.style.display = 'none';
+                    elements.letterArea.style.display = 'block';
+                    showViewer(state.cachedMsg);
+                }, 800);
+            }, 1000);
+        });
+
+        elements.backToHome?.addEventListener('click', () => {
+            window.location.search = "";
+        });
+
         elements.themeBtns.forEach(btn => {
             btn.addEventListener('click', () => setTheme(btn.getAttribute('data-theme')));
         });
 
-        elements.previewBtn.addEventListener('click', () => {
+        elements.previewBtn?.addEventListener('click', () => {
             const msg = elements.letterInput.value.trim();
-            const atmosphere = document.getElementById('atmosphereSelect').value;
+            const atmosphere = document.getElementById('atmosphereSelect')?.value;
+            const imgUrl = document.getElementById('imageUrl')?.value.trim();
+            
             if (msg) {
-                if (atmosphere !== 'none') Effects.setAtmosphere(atmosphere);
-                showViewer(msg);
+                state.cachedMsg = msg;
+                if (atmosphere && atmosphere !== 'none') Effects.setAtmosphere(atmosphere);
+                if (imgUrl) {
+                    const imgEl = document.getElementById('letterImage');
+                    if (imgEl) {
+                        imgEl.src = imgUrl;
+                        document.getElementById('polaroid').style.display = 'block';
+                    }
+                }
+                showEnvelope();
             }
             else alert("Write something first! ❤️");
         });
 
-        elements.backToEditor.addEventListener('click', showEditor);
+        elements.backToEditor?.addEventListener('click', showEditor);
+        elements.startBtn?.addEventListener('click', startLetterAnimation);
 
-        elements.startBtn.addEventListener('click', startLetterAnimation);
-
-        elements.generateLinkBtn.addEventListener('click', async () => {
+        elements.generateLinkBtn?.addEventListener('click', async () => {
             const msg = elements.letterInput.value.trim();
             if (!msg) return alert("Write a message first!");
 
             const encoded = Utils.encodeMessage(msg);
-            if (!encoded) return alert("Message too long!");
-
-            const password = document.getElementById('letterPass').value.trim();
-            const atmosphere = document.getElementById('atmosphereSelect').value;
+            const password = document.getElementById('letterPass')?.value.trim();
+            const atmosphere = document.getElementById('atmosphereSelect')?.value;
+            const unlockDate = document.getElementById('unlockDate')?.value;
+            const imgUrl = document.getElementById('imageUrl')?.value.trim();
 
             const url = new URL(window.location.href);
             url.searchParams.set('msg', encoded);
             url.searchParams.set('theme', state.currentTheme);
             if (password) url.searchParams.set('p', password);
-            if (atmosphere !== 'none') url.searchParams.set('a', atmosphere);
+            if (atmosphere && atmosphere !== 'none') url.searchParams.set('a', atmosphere);
+            if (unlockDate) url.searchParams.set('d', unlockDate);
+            if (imgUrl) url.searchParams.set('img', encodeURIComponent(imgUrl));
             
             elements.shareStatus.textContent = "Shortening link... ⏳";
             const shareUrl = await Utils.shortenUrl(url.toString());
