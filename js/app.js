@@ -144,6 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const atmosphereParam = Utils.getQueryParam('a');
         const dateParam = Utils.getQueryParam('d');
         const imgParam = Utils.getQueryParam('img');
+        const musicParam = Utils.getQueryParam('m');
+        const fontParam = Utils.getQueryParam('f');
+        const couponParam = Utils.getQueryParam('c');
 
         if (msgParam) {
             const decoded = Utils.decodeMessage(msgParam);
@@ -152,10 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (dateParam) {
                     const unlockDate = new Date(dateParam);
-                    if (new Date() < unlockDate) {
-                        showLocked(unlockDate);
-                        return;
-                    }
+                    if (new Date() < unlockDate) { showLocked(unlockDate); return; }
                 }
 
                 if (passParam) {
@@ -169,6 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (themeParam) setTheme(themeParam);
                 if (atmosphereParam) Effects.setAtmosphere(atmosphereParam);
+                if (musicParam) setMusic(musicParam);
+                if (fontParam) setFont(fontParam);
+                if (couponParam) setCoupon(couponParam);
+
                 if (imgParam) {
                     const imgEl = document.getElementById('letterImage');
                     if (imgEl) {
@@ -185,16 +189,30 @@ document.addEventListener('DOMContentLoaded', () => {
             showEditor();
         }
 
+        // Reactions
+        document.querySelectorAll('.react-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const reply = btn.getAttribute('data-reply');
+                const text = encodeURIComponent(reply + "\n\n(Replying to your love letter 💌)");
+                window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+            });
+        });
+
         elements.openEnvelopeBtn?.addEventListener('click', () => {
             const env = document.querySelector('.envelope');
             if (env) env.classList.add('open');
             elements.openEnvelopeBtn.style.display = 'none';
             
+            // Play Music
+            const audio = document.getElementById('bgMusic');
+            if (audio.src) audio.play().catch(e => console.log("Audio play blocked"));
+
             setTimeout(() => {
                 elements.envelopeWrapper.style.opacity = '0';
                 setTimeout(() => {
                     elements.envelopeWrapper.style.display = 'none';
                     elements.letterArea.style.display = 'block';
+                    document.getElementById('reactionBar').style.display = 'block';
                     showViewer(state.cachedMsg);
                 }, 800);
             }, 1000);
@@ -211,13 +229,19 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.previewBtn?.addEventListener('click', async () => {
             const msg = elements.letterInput.value.trim();
             const atmosphere = document.getElementById('atmosphereSelect')?.value;
+            const music = document.getElementById('musicSelect')?.value;
+            const font = document.getElementById('fontSelect')?.value;
+            const coupon = document.getElementById('couponSelect')?.value;
             const imgUrl = document.getElementById('imageUrl')?.value.trim();
             const fileInput = document.getElementById('imageUpload');
             
             if (msg) {
                 state.cachedMsg = msg;
                 if (atmosphere && atmosphere !== 'none') Effects.setAtmosphere(atmosphere);
-                
+                if (music) setMusic(music);
+                if (font) setFont(font);
+                if (coupon) setCoupon(coupon);
+
                 const imgEl = document.getElementById('letterImage');
                 if (fileInput.files && fileInput.files[0]) {
                     const reader = new FileReader();
@@ -249,6 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const encoded = Utils.encodeMessage(msg);
             const password = document.getElementById('letterPass')?.value.trim();
             const atmosphere = document.getElementById('atmosphereSelect')?.value;
+            const music = document.getElementById('musicSelect')?.value;
+            const font = document.getElementById('fontSelect')?.value;
+            const coupon = document.getElementById('couponSelect')?.value;
             const unlockDate = document.getElementById('unlockDate')?.value;
             const imgUrl = document.getElementById('imageUrl')?.value.trim();
             const fileInput = document.getElementById('imageUpload');
@@ -258,11 +285,14 @@ document.addEventListener('DOMContentLoaded', () => {
             url.searchParams.set('theme', state.currentTheme);
             if (password) url.searchParams.set('p', password);
             if (atmosphere && atmosphere !== 'none') url.searchParams.set('a', atmosphere);
+            if (music && music !== 'none') url.searchParams.set('m', music);
+            if (font) url.searchParams.set('f', font);
+            if (coupon && coupon !== 'none') url.searchParams.set('c', coupon);
             if (unlockDate) url.searchParams.set('d', unlockDate);
             
             if (fileInput.files && fileInput.files[0]) {
                 if (fileInput.files[0].size > 50000) {
-                    return alert("Photo is too large! Please use 'Paste link' or a smaller image (<50KB) for sharing.");
+                    return alert("Photo is too large! Please use a smaller image (<50KB).");
                 }
                 const reader = new FileReader();
                 reader.onload = async (e) => {
@@ -275,6 +305,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 await generateAndCopy(url);
             }
         });
+    };
+
+    const setMusic = (type) => {
+        const audio = document.getElementById('bgMusic');
+        const links = {
+            'romantic': 'https://www.bensound.com/bensound-music/bensound-romantic.mp3',
+            'lofi': 'https://www.bensound.com/bensound-music/bensound-lofi.mp3',
+            'violin': 'https://www.bensound.com/bensound-music/bensound-emotional.mp3',
+            'nature': 'https://www.bensound.com/bensound-music/bensound-nature.mp3'
+        };
+        if (links[type]) audio.src = links[type];
+        else audio.src = "";
+    };
+
+    const setFont = (font) => {
+        elements.letterText.className = `letter-text font-${font}`;
+    };
+
+    const setCoupon = (type) => {
+        const names = {
+            'hug': 'One Giant Hug ❤️',
+            'dinner': 'Fancy Dinner Date 🍴',
+            'coffee': 'Coffee Morning ☕',
+            'movie': 'Movie Night 🍿',
+            'custom': 'Your Special Gift 🎁'
+        };
+        if (names[type]) {
+            document.getElementById('couponText').textContent = names[type];
+            document.getElementById('loveCoupon').style.display = 'block';
+        } else {
+            document.getElementById('loveCoupon').style.display = 'none';
+        }
     };
 
     const generateAndCopy = async (url) => {

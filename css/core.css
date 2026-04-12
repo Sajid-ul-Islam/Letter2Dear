@@ -467,3 +467,122 @@ textarea:focus, input:focus {
 .star-twinkle { width: 2px; height: 2px; background: #fff; border-radius: 50%; animation: twinkle 3s infinite ease-in-out; }
 @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; scale: 1.5; } }
 
+/* Font Utilities */
+.font-atma { font-family: 'Atma', cursive; }
+.font-dancing { font-family: 'Dancing Script', cursive; font-size: 2.4rem !important; }
+.font-playwrite { font-family: 'Playwrite AU SA', serif; font-size: 1.6rem !important; }
+.font-outfit { font-family: 'Outfit', sans-serif; }
+
+/* Love Coupon Aesthetic */
+.coupon-card {
+    background: linear-gradient(135deg, #fffcf0 0%, #fff 100%);
+    border: 3px double #d4af37;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 280px;
+    margin: 0 auto 3rem;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+    color: #333;
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.coupon-card::before, .coupon-card::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: var(--bg-gradient);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.coupon-card::before { left: -15px; }
+.coupon-card::after { right: -15px; }
+
+.coupon-tag {
+    display: inline-block;
+    background: #d4af37;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.coupon-card h3 {
+    font-family: 'Atma', cursive;
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+/* Reaction Bar */
+.reaction-bar {
+    margin-top: 4rem;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.reaction-bar p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+}
+
+.reaction-btns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.react-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.react-btn:hover {
+    transform: scale(1.3) translateY(-10px);
+    background: var(--primary-gradient);
+    border-color: transparent;
+}
+
+/* Atmosphere: Petals */
+.petal-element {
+    position: fixed;
+    top: -50px;
+    pointer-events: none;
+    z-index: 2;
+    background: #ff6b81;
+    border-radius: 50% 0 50% 50%;
+    opacity: 0.7;
+    animation: petalFall 10s linear infinite;
+}
+
+@keyframes petalFall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(720deg); }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+

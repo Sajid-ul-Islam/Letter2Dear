@@ -1,13 +1,19 @@
 {
-  "name": "tomyinfida",
+  "name": "tomyinfida-saas",
   "version": "1.0.0",
-  "description": "A romantic letter sharing application",
-  "main": "server.js",
+  "description": "Premium Love Letter SaaS",
+  "main": "index.html",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "npx serve .",
+    "deploy": "surge . letter2dear.surge.sh"
   },
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+  "keywords": [
+    "love",
+    "letter",
+    "saas",
+    "pwa"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {}
 }

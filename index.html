@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@300;400;500;600;700&family=Atma:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@300;400;500;600;700&family=Atma:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&family=Playwrite+AU+SA:wght@100..400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/core.css">
@@ -82,18 +82,54 @@
 
                 <div class="form-row">
                     <div class="form-group flex-1">
-                        <label>Password Protection (Optional)</label>
-                        <input type="password" id="letterPass" placeholder="Secret word...">
+                        <label>🎵 Background Music</label>
+                        <select id="musicSelect">
+                            <option value="none">Silence</option>
+                            <option value="romantic">Romantic Piano</option>
+                            <option value="lofi">Lo-fi Beat</option>
+                            <option value="violin">Emotional Violin</option>
+                            <option value="nature">Night Nature</option>
+                        </select>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>🖋️ Handwriting Style</label>
+                        <select id="fontSelect">
+                            <option value="atma">Handwritten (Default)</option>
+                            <option value="dancing">Elegant Cursive</option>
+                            <option value="playwrite">Modern Script</option>
+                            <option value="outfit">Clean Modern</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label>🎟️ Love Coupon (Optional)</label>
+                        <select id="couponSelect">
+                            <option value="none">No Coupon</option>
+                            <option value="hug">One Giant Hug</option>
+                            <option value="dinner">Fancy Dinner Date</option>
+                            <option value="coffee">Coffee Morning</option>
+                            <option value="movie">Movie Night</option>
+                            <option value="custom">Blank Gift Voucher</option>
+                        </select>
                     </div>
                     <div class="form-group flex-1">
                         <label>Atmosphere</label>
                         <select id="atmosphereSelect">
                             <option value="none">None</option>
                             <option value="rain">Soft Rain</option>
-                            <option value="piano">Gentle Piano</option>
+                            <option value="petals">Falling Rose Petals 🌸</option>
                             <option value="stars">Starry Night</option>
                             <option value="birds">Morning Birds</option>
                         </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label>Password Protection (Optional)</label>
+                        <input type="password" id="letterPass" placeholder="Secret word...">
                     </div>
                 </div>
 
@@ -142,12 +178,32 @@
                     <img id="letterImage" src="" alt="Polaroid Memory">
                     <div class="polaroid-text">For You</div>
                 </div>
+
+                <div id="loveCoupon" class="coupon-card" style="display: none;">
+                    <div class="coupon-content">
+                        <span class="coupon-tag">Gift Voucher</span>
+                        <h3 id="couponText">One Giant Hug</h3>
+                        <p>Redeemable Anytime ❤️</p>
+                    </div>
+                </div>
+
                 <div class="letter-content glass-card">
                     <div class="letter-text" id="letterText">
                         <!-- Paragraphs will be injected here -->
                     </div>
                 </div>
+
+                <div class="reaction-bar" id="reactionBar" style="display: none;">
+                    <p>Send a Reaction:</p>
+                    <div class="reaction-btns">
+                        <button class="react-btn" data-reply="I love you too! ❤️">❤️</button>
+                        <button class="react-btn" data-reply="That's so sweet! 🥹">🥹</button>
+                        <button class="react-btn" data-reply="Meet me soon! ☕">☕</button>
+                        <button class="react-btn" data-reply="Can't wait to see you! 😍">😍</button>
+                    </div>
+                </div>
             </div>
+            <audio id="bgMusic" loop preload="auto"></audio>
         </main>
 
         <footer class="footer">

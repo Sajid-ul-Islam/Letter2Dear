@@ -1,0 +1,11 @@
+node_modules
+.git
+.gemini
+README.md
+package.json
+package-lock.json
+fly.toml
+server.js
+script.js
+styles.css
+*.log
