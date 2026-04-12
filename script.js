@@ -1,319 +1,207 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const editorMode = document.getElementById('editorMode');
+    const viewerMode = document.getElementById('viewerMode');
+    const letterInput = document.getElementById('letterInput');
+    const letterText = document.getElementById('letterText');
+    const generateLinkBtn = document.getElementById('generateLinkBtn');
+    const previewBtn = document.getElementById('previewBtn');
+    const backToEditor = document.getElementById('backToEditor');
     const startBtn = document.getElementById('startBtn');
-    const paragraphs = document.querySelectorAll('.paragraph');
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    const shareStatus = document.getElementById('shareStatus');
+    
+    let currentTheme = 'default';
     let animationStarted = false;
 
-    // Create floating hearts dynamically
-    function createFloatingHeart() {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.innerHTML = '❤️';
-        heart.style.left = Math.random() * 100 + '%';
-        heart.style.animationDelay = Math.random() * 3 + 's';
-        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-        document.body.appendChild(heart);
+    // --- Initialization ---
+    
+    // Check for existing message in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const encodedMsg = urlParams.get('msg');
+    const themeParam = urlParams.get('theme');
 
-        // Remove heart after animation completes
-        setTimeout(() => {
-            heart.remove();
-        }, 4000);
-    }
-
-    // Create floating flowers dynamically
-    function createFloatingFlower() {
-        const flowers = ['🌸', '🌺', '🌹', '🌷', '🌻'];
-        const flower = document.createElement('div');
-        flower.className = 'flower-element';
-        flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-        flower.style.left = Math.random() * 100 + '%';
-        flower.style.animationDelay = Math.random() * 4 + 's';
-        flower.style.fontSize = (Math.random() * 15 + 20) + 'px';
-        document.body.appendChild(flower);
-
-        setTimeout(() => {
-            flower.remove();
-        }, 6000);
-    }
-
-    // Create floating love symbols dynamically
-    function createFloatingLove() {
-        const symbols = ['💕', '💖', '💗', '💝', '💞'];
-        const love = document.createElement('div');
-        love.className = 'love-symbol';
-        love.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-        love.style.left = Math.random() * 100 + '%';
-        love.style.animationDelay = Math.random() * 3 + 's';
-        love.style.fontSize = (Math.random() * 10 + 15) + 'px';
-        document.body.appendChild(love);
-
-        setTimeout(() => {
-            love.remove();
-        }, 5000);
-    }
-
-    // Create floating elements periodically
-    setInterval(createFloatingHeart, 2000);
-    setInterval(createFloatingFlower, 3000);
-    setInterval(createFloatingLove, 2500);
-
-    // Auto-start animation after page loads
-    setTimeout(() => {
-        if (!animationStarted) {
-            startLetterAnimation();
-            animationStarted = true;
-            startBtn.textContent = 'Reading in Progress...';
-            startBtn.classList.add('loading');
+    if (encodedMsg) {
+        try {
+            const decodedMsg = decodeURIComponent(escape(atob(encodedMsg)));
+            letterInput.value = decodedMsg;
+            if (themeParam) {
+                setTheme(themeParam);
+            }
+            showViewer(decodedMsg);
+        } catch (e) {
+            console.error("Failed to decode message", e);
+            showEditor();
         }
-    }, 1000); // Start after 1 second
+    } else {
+        showEditor();
+    }
 
-    // Start button functionality (for manual restart)
-    startBtn.addEventListener('click', function () {
-        if (!animationStarted) {
-            startLetterAnimation();
-            animationStarted = true;
-            startBtn.textContent = 'Reading in Progress...';
-            startBtn.classList.add('loading');
+    // --- Mode Switching ---
+
+    function showEditor() {
+        editorMode.style.display = 'flex';
+        viewerMode.style.display = 'none';
+        backToEditor.style.display = 'none';
+        startBtn.style.display = 'none';
+        document.getElementById('pageTitle').textContent = "তোমার জন্য";
+        document.getElementById('pageSubtitle').textContent = "Create Your Masterpiece";
+    }
+
+    function showViewer(msg) {
+        editorMode.style.display = 'none';
+        viewerMode.style.display = 'flex';
+        backToEditor.style.display = 'inline-block';
+        startBtn.style.display = 'inline-block';
+        startBtn.textContent = 'Begin Your Journey';
+        document.getElementById('pageTitle').textContent = "তোমার জন্য";
+        document.getElementById('pageSubtitle').textContent = "For My Love 💕";
+        
+        // Prepare letter text
+        letterText.innerHTML = '';
+        const lines = msg.split('\n').filter(line => line.trim() !== '');
+        lines.forEach(line => {
+            const p = document.createElement('p');
+            p.className = 'paragraph';
+            p.textContent = line;
+            letterText.appendChild(p);
+        });
+    }
+
+    // --- Theme Logic ---
+
+    function setTheme(theme) {
+        currentTheme = theme;
+        document.body.className = `theme-${theme}`;
+        
+        themeBtns.forEach(btn => {
+            if (btn.getAttribute('data-theme') === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const theme = btn.getAttribute('data-theme');
+            setTheme(theme);
+        });
+    });
+
+    // --- Action Handlers ---
+
+    previewBtn.addEventListener('click', () => {
+        const msg = letterInput.value.trim();
+        if (!msg) return alert("Please write something first!");
+        showViewer(msg);
+    });
+
+    backToEditor.addEventListener('click', () => {
+        showEditor();
+    });
+
+    generateLinkBtn.addEventListener('click', () => {
+        const msg = letterInput.value.trim();
+        if (!msg) return alert("Write a message first!");
+        
+        try {
+            const encoded = btoa(unescape(encodeURIComponent(msg)));
+            const url = new URL(window.location.href);
+            url.searchParams.set('msg', encoded);
+            url.searchParams.set('theme', currentTheme);
+            
+            navigator.clipboard.writeText(url.toString()).then(() => {
+                shareStatus.textContent = "Link copied to clipboard! 💝";
+                setTimeout(() => shareStatus.textContent = "", 3000);
+            });
+        } catch (e) {
+            alert("Could not generate link. Try shorter text.");
         }
     });
 
-    // Animate letter paragraphs sequentially
+    startBtn.addEventListener('click', () => {
+        if (!animationStarted) {
+            startLetterAnimation();
+        }
+    });
+
+    // --- Animations (Enhanced from original) ---
+
     async function startLetterAnimation() {
+        const paragraphs = document.querySelectorAll('.paragraph');
+        animationStarted = true;
+        startBtn.textContent = 'Reading...';
+        startBtn.classList.add('loading');
+
         for (let i = 0; i < paragraphs.length; i++) {
-            const paragraph = paragraphs[i];
-
-            // Add fade-in class to make it visible (but empty content initially handled by typewriter)
-            paragraph.classList.add('fade-in');
-
-            // Create burst of effects
+            const p = paragraphs[i];
+            p.classList.add('fade-in');
             createBurstEffect();
-
-            // Wait for typing to complete before showing next paragraph
-            await typewriterEffect(paragraph);
-
-            // Add special effect to the highlight paragraph after typing
-            if (paragraph.classList.contains('highlight')) {
-                createSpecialEffect();
-            }
-
-            // Small pause between paragraphs
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await typewriterEffect(p);
+            await new Promise(r => setTimeout(r, 600));
         }
 
-        // Re-enable button after animation completes
         startBtn.textContent = 'Read Again';
         startBtn.classList.remove('loading');
         animationStarted = false;
     }
 
-    // Realistic Typewriter effect
     function typewriterEffect(element) {
         return new Promise(resolve => {
-            const text = element.getAttribute('data-text') || element.textContent;
-            // Store text in data attribute if not already there
-            if (!element.getAttribute('data-text')) {
-                element.setAttribute('data-text', text);
-            }
-
+            const text = element.textContent;
             element.textContent = '';
             element.style.opacity = '1';
             element.classList.add('typing-cursor');
 
             let i = 0;
-
             function typeChar() {
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
-                    // Random typing speed for realism (30ms to 80ms)
-                    const randomDelay = Math.random() * 50 + 30;
-                    setTimeout(typeChar, randomDelay);
+                    setTimeout(typeChar, Math.random() * 40 + 20);
                 } else {
                     element.classList.remove('typing-cursor');
                     resolve();
                 }
             }
-
-            // Start typing
             typeChar();
         });
     }
 
-    // Create burst effect for each paragraph
+    // --- Visual Effects ---
+
     function createBurstEffect() {
-        for (let i = 0; i < 3; i++) {
-            setTimeout(() => {
-                createFloatingHeart();
-                createFloatingFlower();
-            }, i * 200);
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createFloatingHeart, i * 150);
         }
     }
 
-    // Special effect for the final highlight paragraph
-    function createSpecialEffect() {
-        // Create massive burst of hearts and flowers
-        for (let i = 0; i < 15; i++) {
-            setTimeout(() => {
-                createFloatingHeart();
-                createFloatingFlower();
-                createFloatingLove();
-            }, i * 100);
-        }
-
-        // Add glow effect to the paragraph
-        const highlightParagraph = document.querySelector('.paragraph.highlight');
-        if (highlightParagraph) {
-            highlightParagraph.style.animation = 'pulse 2s ease-in-out infinite, textGlow 3s ease-in-out infinite';
-
-            // Add rainbow effect
-            setTimeout(() => {
-                highlightParagraph.style.background = 'linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(255, 182, 193, 0.1), rgba(214, 51, 132, 0.1))';
-                highlightParagraph.style.backgroundSize = '200% 200%';
-                highlightParagraph.style.animation = 'pulse 2s ease-in-out infinite, textGlow 3s ease-in-out infinite, rainbow 3s ease-in-out infinite';
-            }, 1000);
-        }
+    function createFloatingHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 95 + '%';
+        heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
     }
 
-    // Add keyboard navigation
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            if (!animationStarted) {
-                startBtn.click();
-            }
-        }
-    });
-
-    // Add mouse move effect for subtle parallax
-    document.addEventListener('mousemove', function (e) {
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-
-        const floatingHearts = document.querySelector('.floating-hearts');
-        const particles = document.querySelector('.particles');
-
-        if (floatingHearts) {
-            floatingHearts.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
-        }
-        if (particles) {
-            particles.style.transform = `translate(${-x * 5}px, ${-y * 5}px)`;
-        }
-    });
-
-    // Add scroll-based animations
-    let lastScrollY = window.scrollY;
-    window.addEventListener('scroll', function () {
-        const currentScrollY = window.scrollY;
-        const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-
-        // Add subtle effects based on scroll direction
-        const letterContent = document.querySelector('.letter-content');
-        if (letterContent) {
-            if (scrollDirection === 'down') {
-                letterContent.style.transform = `translateY(${Math.min(currentScrollY * 0.1, 20)}px)`;
-            } else {
-                letterContent.style.transform = `translateY(${Math.max(currentScrollY * 0.1, -20)}px)`;
-            }
-        }
-
-        lastScrollY = currentScrollY;
-    });
-
-    // Add rainbow animation for highlight paragraph
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 5px 15px rgba(214, 51, 132, 0.2);
-            }
-            50% {
-                transform: scale(1.02);
-                box-shadow: 0 8px 25px rgba(214, 51, 132, 0.4);
-            }
-        }
-        
-        @keyframes rainbow {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Auto-start animation after a delay
-    setTimeout(() => {
-        if (!animationStarted) {
-            startLetterAnimation();
-            animationStarted = true;
-            startBtn.textContent = 'Reading in Progress...';
-            startBtn.classList.add('loading');
-        }
-    }, 1000);
-
-    // Add touch support for mobile devices
-    let touchStartY = 0;
-    document.addEventListener('touchstart', function (e) {
-        touchStartY = e.touches[0].clientY;
-    });
-
-    document.addEventListener('touchend', function (e) {
-        const touchEndY = e.changedTouches[0].clientY;
-        const swipeDistance = touchStartY - touchEndY;
-
-        // Swipe up to start animation
-        if (Math.abs(swipeDistance) > 50 && !animationStarted) {
-            startLetterAnimation();
-            animationStarted = true;
-            startBtn.textContent = 'Reading in Progress...';
-            startBtn.classList.add('loading');
-        }
-    });
-
-    // Create additional visual effects
-    function createSparkle() {
-        const sparkle = document.createElement('div');
-        sparkle.innerHTML = '✨';
-        sparkle.style.position = 'fixed';
-        sparkle.style.left = Math.random() * 100 + '%';
-        sparkle.style.top = Math.random() * 100 + '%';
-        sparkle.style.fontSize = (Math.random() * 10 + 5) + 'px';
-        sparkle.style.pointerEvents = 'none';
-        sparkle.style.zIndex = '5';
-        sparkle.style.animation = 'sparkle 2s ease-in-out';
-        document.body.appendChild(sparkle);
-
-        setTimeout(() => {
-            sparkle.remove();
-        }, 2000);
-    }
-
-    // Create firefly effect
     function createFirefly() {
         const firefly = document.createElement('div');
         firefly.className = 'firefly';
         firefly.style.left = Math.random() * 100 + '%';
         firefly.style.top = Math.random() * 100 + '%';
-
-        // Random animation duration and delay
-        firefly.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        firefly.style.animationDelay = Math.random() * 5 + 's';
-
+        firefly.style.animationDuration = (Math.random() * 5 + 10) + 's';
         document.body.appendChild(firefly);
-
-        // Cleanup
-        setTimeout(() => {
-            firefly.remove();
-        }, 15000);
+        setTimeout(() => firefly.remove(), 15000);
     }
 
-    // Create fireflies periodically
-    setInterval(createFirefly, 1000);
+    setInterval(createFirefly, 1200);
+    setInterval(() => {
+        if (Math.random() > 0.5) createFloatingHeart();
+    }, 2000);
 
-    console.log('Romantic Letter Animation Loaded Successfully! ❤️');
+    console.log('Premium Love Letter App Initialized! 💖');
 });
+
