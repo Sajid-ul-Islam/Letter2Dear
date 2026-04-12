@@ -1,3 +1,7 @@
+/* ============================================
+   ToMyInfida — Theme Definitions
+   ============================================ */
+
 :root {
     --primary-gradient: linear-gradient(135deg, #ff3366, #ff6b81);
     --bg-gradient: linear-gradient(-45deg, #2d1b4e, #1a0b2e, #4a192c, #702f4e, #2d1b4e);
@@ -7,63 +11,107 @@
     --accent-color: #ff3366;
 }
 
-/* Theme Variations */
+/* Sunset */
 body.theme-sunset {
     --bg-gradient: linear-gradient(-45deg, #ff5f6d, #ffc371, #ff5f6d);
     --primary-gradient: linear-gradient(135deg, #e94057, #f27121);
     --accent-color: #e94057;
 }
 
+/* Ocean */
 body.theme-ocean {
     --bg-gradient: linear-gradient(-45deg, #2193b0, #6dd5ed, #2193b0);
     --primary-gradient: linear-gradient(135deg, #00b4db, #0083b0);
     --accent-color: #00b4db;
 }
 
+/* Forest */
 body.theme-forest {
     --bg-gradient: linear-gradient(-45deg, #11998e, #38ef7d, #11998e);
     --primary-gradient: linear-gradient(135deg, #00b09b, #96c93d);
     --accent-color: #00b09b;
 }
 
+/* Lavender */
 body.theme-lavender {
     --bg-gradient: linear-gradient(-45deg, #834d9b, #d04ed6, #834d9b);
     --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
     --accent-color: #6a11cb;
 }
 
+/* Sakura */
 body.theme-sakura {
     --bg-gradient: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ff9a9e);
     --primary-gradient: linear-gradient(135deg, #f093fb, #f5576c);
     --accent-color: #f5576c;
 }
 
+/* Galaxy */
 body.theme-galaxy {
     --bg-gradient: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
     --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
     --accent-color: #7d5fff;
 }
 
+/* Rose */
 body.theme-rose {
     --bg-gradient: linear-gradient(-45deg, #4b0000, #a80000, #4b0000);
     --primary-gradient: linear-gradient(135deg, #ff0844, #ffb199);
     --accent-color: #ff0844;
 }
 
+/* Vintage (light theme) */
 body.theme-vintage {
     --bg-gradient: linear-gradient(-45deg, #d4ae8d, #e9d5ca, #d4ae8d);
     --primary-gradient: linear-gradient(135deg, #6d4c41, #8d6e63);
     --accent-color: #5d4037;
     --text-color: #2d1b1b;
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(0, 0, 0, 0.08);
 }
 
 body.theme-vintage .glass-card {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.45);
     color: #2d1b1b;
 }
 
-body.theme-vintage textarea {
+body.theme-vintage textarea,
+body.theme-vintage input,
+body.theme-vintage select {
     color: #2d1b1b;
-    border-color: rgba(0,0,0,0.1);
+    border-color: rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.2);
 }
 
+body.theme-vintage textarea::placeholder,
+body.theme-vintage input::placeholder {
+    color: rgba(45, 27, 27, 0.4);
+}
+
+body.theme-vintage .section-title {
+    color: #5d4037;
+}
+
+body.theme-vintage .subtitle,
+body.theme-vintage .form-group label {
+    color: #2d1b1b;
+}
+
+body.theme-vintage .keyboard-hints,
+body.theme-vintage .footer-text {
+    color: rgba(45, 27, 27, 0.4);
+}
+
+body.theme-vintage .keyboard-hints kbd {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #2d1b1b;
+}
+
+body.theme-vintage .char-count {
+    color: rgba(45, 27, 27, 0.4);
+}
+
+body.theme-vintage .share-status {
+    color: #2e7d32;
+}

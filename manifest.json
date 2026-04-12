@@ -1,11 +1,14 @@
 {
-  "name": "To My Heart - Premium Letters",
-  "short_name": "ToMyHeart",
-  "description": "Create and share beautiful, encrypted love letters.",
+  "name": "ToMyInfida - Love Letters",
+  "short_name": "ToMyInfida",
+  "description": "Create and share beautifully animated love letters with themes, music, and special effects.",
   "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#2d1b4e",
+  "orientation": "portrait",
+  "background_color": "#0a0e17",
   "theme_color": "#ff3366",
+  "categories": ["entertainment", "social"],
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/2589/2589175.png",
