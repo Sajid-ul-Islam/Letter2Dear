@@ -35,6 +35,11 @@
                 <span class="flower">🌸</span>
             </div>
             <p class="subtitle" id="pageSubtitle">For My Love 💕</p>
+            
+            <div class="header-actions">
+                <button class="start-btn" id="startBtn" style="display: none;">Begin Your Journey</button>
+                <button class="secondary-btn" id="backToEditor" style="display: none;">Edit Letter</button>
+            </div>
         </header>
 
         <!-- Editor Mode -->
@@ -63,12 +68,15 @@
 
                 <div class="form-row">
                     <div class="form-group flex-1">
-                        <label>Unlock Date (Optional)</label>
+                        <label>🗓️ Unlock Date (Optional)</label>
                         <input type="date" id="unlockDate">
                     </div>
                     <div class="form-group flex-1">
-                        <label>Polaroid Image (URL)</label>
-                        <input type="url" id="imageUrl" placeholder="Htttp://image-link.jpg">
+                        <label>📸 Polaroid Image</label>
+                        <div class="upload-wrapper">
+                            <input type="file" id="imageUpload" accept="image/*" class="file-input">
+                            <input type="url" id="imageUrl" placeholder="Or paste link..." class="url-input">
+                        </div>
                     </div>
                 </div>
 
@@ -143,8 +151,7 @@
         </main>
 
         <footer class="footer">
-            <button class="start-btn" id="startBtn">Begin Your Journey</button>
-            <button class="secondary-btn" id="backToEditor" style="display: none; margin-top: 1rem;">Edit Letter</button>
+            <!-- Buttons moved to header -->
         </footer>
     </div>
 

@@ -208,22 +208,33 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', () => setTheme(btn.getAttribute('data-theme')));
         });
 
-        elements.previewBtn?.addEventListener('click', () => {
+        elements.previewBtn?.addEventListener('click', async () => {
             const msg = elements.letterInput.value.trim();
             const atmosphere = document.getElementById('atmosphereSelect')?.value;
             const imgUrl = document.getElementById('imageUrl')?.value.trim();
+            const fileInput = document.getElementById('imageUpload');
             
             if (msg) {
                 state.cachedMsg = msg;
                 if (atmosphere && atmosphere !== 'none') Effects.setAtmosphere(atmosphere);
-                if (imgUrl) {
-                    const imgEl = document.getElementById('letterImage');
-                    if (imgEl) {
-                        imgEl.src = imgUrl;
+                
+                const imgEl = document.getElementById('letterImage');
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        imgEl.src = e.target.result;
                         document.getElementById('polaroid').style.display = 'block';
-                    }
+                        showEnvelope();
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else if (imgUrl) {
+                    imgEl.src = imgUrl;
+                    document.getElementById('polaroid').style.display = 'block';
+                    showEnvelope();
+                } else {
+                    document.getElementById('polaroid').style.display = 'none';
+                    showEnvelope();
                 }
-                showEnvelope();
             }
             else alert("Write something first! ❤️");
         });
@@ -240,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const atmosphere = document.getElementById('atmosphereSelect')?.value;
             const unlockDate = document.getElementById('unlockDate')?.value;
             const imgUrl = document.getElementById('imageUrl')?.value.trim();
+            const fileInput = document.getElementById('imageUpload');
 
             const url = new URL(window.location.href);
             url.searchParams.set('msg', encoded);
@@ -247,28 +259,43 @@ document.addEventListener('DOMContentLoaded', () => {
             if (password) url.searchParams.set('p', password);
             if (atmosphere && atmosphere !== 'none') url.searchParams.set('a', atmosphere);
             if (unlockDate) url.searchParams.set('d', unlockDate);
-            if (imgUrl) url.searchParams.set('img', encodeURIComponent(imgUrl));
             
-            elements.shareStatus.textContent = "Shortening link... ⏳";
-            const shareUrl = await Utils.shortenUrl(url.toString());
-
-            if (await Utils.copyToClipboard(shareUrl)) {
-                elements.shareStatus.textContent = "Short link copied! 💝";
-                elements.shareOptions.style.display = 'flex';
-
-                elements.whatsappBtn.onclick = () => {
-                    const text = encodeURIComponent("I have written a special letter for you... 💖\n\nRead it here: " + shareUrl);
-                    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+            if (fileInput.files && fileInput.files[0]) {
+                if (fileInput.files[0].size > 50000) {
+                    return alert("Photo is too large! Please use 'Paste link' or a smaller image (<50KB) for sharing.");
+                }
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    url.searchParams.set('img', encodeURIComponent(e.target.result));
+                    await generateAndCopy(url);
                 };
-
-                elements.telegramBtn.onclick = () => {
-                    const text = encodeURIComponent("I have written a special letter for you... 💖");
-                    window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${text}`, '_blank');
-                };
-
-                setTimeout(() => elements.shareStatus.textContent = "", 4000);
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                if (imgUrl) url.searchParams.set('img', encodeURIComponent(imgUrl));
+                await generateAndCopy(url);
             }
         });
+    };
+
+    const generateAndCopy = async (url) => {
+        elements.shareStatus.textContent = "Shortening link... ⏳";
+        const shareUrl = await Utils.shortenUrl(url.toString());
+
+        if (await Utils.copyToClipboard(shareUrl)) {
+            elements.shareStatus.textContent = "Short link copied! 💝";
+            elements.shareOptions.style.display = 'flex';
+
+            elements.whatsappBtn.onclick = () => {
+                const text = encodeURIComponent("I have written a special, locked letter for you... 💖\n\nRead it here: " + shareUrl);
+                window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+            };
+
+            elements.telegramBtn.onclick = () => {
+                const text = encodeURIComponent("I have written a special letter for you... 💖");
+                window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${text}`, '_blank');
+            };
+            setTimeout(() => elements.shareStatus.textContent = "", 5000);
+        }
     };
 
     init();
