@@ -27,6 +27,29 @@
         rel="stylesheet">
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/core.css">
+    <style>
+        /* New Themes */
+        body.theme-academia {
+            background: linear-gradient(135deg, #2c3e50, #000000);
+        }
+
+        body.theme-cyberpunk {
+            background: linear-gradient(135deg, #120458, #ff007f);
+        }
+
+        body.theme-minimalist {
+            background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+        }
+
+        /* Settings Accordion */
+        details.advanced-settings summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details.advanced-settings[open] summary span:last-child {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 
 <body class="theme-default">
@@ -82,115 +105,140 @@
                     </div>
                 </div>
 
-                <div class="editor-section">
-                    <h3 class="section-title">Design & Style</h3>
-                    <div class="form-group">
-                        <label>Choose a Theme</label>
-                        <div class="theme-selector" role="radiogroup" aria-label="Letter theme">
-                            <button class="theme-btn active" data-theme="default"
-                                style="background: linear-gradient(-45deg, #2d1b4e, #702f4e);" role="radio"
-                                aria-checked="true">Midnight</button>
-                            <button class="theme-btn" data-theme="sunset"
-                                style="background: linear-gradient(135deg, #ff5f6d, #ffc371);" role="radio"
-                                aria-checked="false">Sunset</button>
-                            <button class="theme-btn" data-theme="ocean"
-                                style="background: linear-gradient(135deg, #2193b0, #6dd5ed);" role="radio"
-                                aria-checked="false">Ocean</button>
-                            <button class="theme-btn" data-theme="forest"
-                                style="background: linear-gradient(135deg, #11998e, #38ef7d);" role="radio"
-                                aria-checked="false">Forest</button>
-                            <button class="theme-btn" data-theme="lavender"
-                                style="background: linear-gradient(135deg, #834d9b, #d04ed6);" role="radio"
-                                aria-checked="false">Lavender</button>
-                            <button class="theme-btn" data-theme="rose"
-                                style="background: linear-gradient(135deg, #ff0844, #ffb199);" role="radio"
-                                aria-checked="false">Rose</button>
-                            <button class="theme-btn" data-theme="galaxy"
-                                style="background: linear-gradient(135deg, #0f0c29, #302b63);" role="radio"
-                                aria-checked="false">Galaxy</button>
-                            <button class="theme-btn" data-theme="sakura"
-                                style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);" role="radio"
-                                aria-checked="false">Sakura</button>
-                            <button class="theme-btn" data-theme="vintage"
-                                style="background: linear-gradient(135deg, #d4ae8d, #e9d5ca);" role="radio"
-                                aria-checked="false">Vintage</button>
-                        </div>
-                    </div>
+                <details class="advanced-settings glass-card"
+                    style="margin-bottom: 2rem; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <summary
+                        style="cursor: pointer; padding: 1rem; font-weight: 600; font-size: 1.1rem; display: flex; align-items: center; justify-content: space-between; list-style: none;">
+                        <span>⚙️ Personalize & Advanced Settings <span
+                                style="font-size: 0.9em; opacity: 0.7; font-weight: normal;">(Optional)</span></span>
+                        <span aria-hidden="true" style="transition: transform 0.3s;">▼</span>
+                    </summary>
+                    <div class="settings-content"
+                        style="padding: 1rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 0.5rem;">
+                        <div class="editor-section">
+                            <h3 class="section-title">Design & Style</h3>
+                            <div class="form-group">
+                                <label>Choose a Theme</label>
+                                <div class="theme-selector" role="radiogroup" aria-label="Letter theme">
+                                    <button class="theme-btn active" data-theme="default"
+                                        style="background: linear-gradient(-45deg, #2d1b4e, #702f4e);" role="radio"
+                                        aria-checked="true">Midnight</button>
+                                    <button class="theme-btn" data-theme="sunset"
+                                        style="background: linear-gradient(135deg, #ff5f6d, #ffc371);" role="radio"
+                                        aria-checked="false">Sunset</button>
+                                    <button class="theme-btn" data-theme="ocean"
+                                        style="background: linear-gradient(135deg, #2193b0, #6dd5ed);" role="radio"
+                                        aria-checked="false">Ocean</button>
+                                    <button class="theme-btn" data-theme="forest"
+                                        style="background: linear-gradient(135deg, #11998e, #38ef7d);" role="radio"
+                                        aria-checked="false">Forest</button>
+                                    <button class="theme-btn" data-theme="lavender"
+                                        style="background: linear-gradient(135deg, #834d9b, #d04ed6);" role="radio"
+                                        aria-checked="false">Lavender</button>
+                                    <button class="theme-btn" data-theme="rose"
+                                        style="background: linear-gradient(135deg, #ff0844, #ffb199);" role="radio"
+                                        aria-checked="false">Rose</button>
+                                    <button class="theme-btn" data-theme="galaxy"
+                                        style="background: linear-gradient(135deg, #0f0c29, #302b63);" role="radio"
+                                        aria-checked="false">Galaxy</button>
+                                    <button class="theme-btn" data-theme="sakura"
+                                        style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);" role="radio"
+                                        aria-checked="false">Sakura</button>
+                                    <button class="theme-btn" data-theme="vintage"
+                                        style="background: linear-gradient(135deg, #d4ae8d, #e9d5ca);" role="radio"
+                                        aria-checked="false">Vintage</button>
+                                    <button class="theme-btn" data-theme="academia"
+                                        style="background: linear-gradient(135deg, #2c3e50, #000000);" role="radio"
+                                        aria-checked="false">Academia</button>
+                                    <button class="theme-btn" data-theme="cyberpunk"
+                                        style="background: linear-gradient(135deg, #fce043, #fb7ba2);" role="radio"
+                                        aria-checked="false">Cyberpunk</button>
+                                    <button class="theme-btn" data-theme="minimalist"
+                                        style="background: linear-gradient(135deg, #bdc3c7, #2c3e50);" role="radio"
+                                        aria-checked="false">Minimalist</button>
+                                </div>
+                            </div>
 
-                    <div class="form-row">
-                        <div class="form-group flex-1">
-                            <label for="fontSelect">Handwriting Style</label>
-                            <select id="fontSelect">
-                                <option value="atma">Handwritten (Default)</option>
-                                <option value="dancing">Elegant Cursive</option>
-                                <option value="playwrite">Modern Script</option>
-                                <option value="outfit">Clean Modern</option>
-                            </select>
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="fontSelect">Handwriting Style</label>
+                                    <select id="fontSelect">
+                                        <option value="atma">Handwritten (Default)</option>
+                                        <option value="dancing">Elegant Cursive</option>
+                                        <option value="playwrite">Modern Script</option>
+                                        <option value="outfit">Clean Modern</option>
+                                    </select>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="atmosphereSelect">Atmosphere</label>
+                                    <select id="atmosphereSelect">
+                                        <option value="none">None</option>
+                                        <option value="rain">Soft Rain</option>
+                                        <option value="petals">Falling Petals</option>
+                                        <option value="stars">Starry Night</option>
+                                        <option value="birds">Morning Birds</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group flex-1">
-                            <label for="atmosphereSelect">Atmosphere</label>
-                            <select id="atmosphereSelect">
-                                <option value="none">None</option>
-                                <option value="rain">Soft Rain</option>
-                                <option value="petals">Falling Petals</option>
-                                <option value="stars">Starry Night</option>
-                                <option value="birds">Morning Birds</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="editor-section">
-                    <h3 class="section-title">Experience & Extras</h3>
-                    <div class="form-group">
-                        <label>Polaroid Memory</label>
-                        <div class="upload-wrapper">
-                            <input type="file" id="imageUpload" accept="image/*" class="file-input"
-                                aria-label="Upload a photo">
-                            <input type="url" id="imageUrl" placeholder="Or paste an image link (e.g. Imgur)..."
-                                class="url-input" aria-label="Image URL">
-                            <div class="upload-hint">Max 50KB for file uploads. Use a URL for larger images.</div>
-                        </div>
-                    </div>
+                        <div class="editor-section">
+                            <h3 class="section-title">Experience & Extras</h3>
+                            <div class="form-group">
+                                <label>Polaroid Memory</label>
+                                <div class="upload-wrapper">
+                                    <input type="file" id="imageUpload" accept="image/*" class="file-input"
+                                        aria-label="Upload a photo">
+                                    <input type="url" id="imageUrl" placeholder="Or paste an image link (e.g. Imgur)..."
+                                        class="url-input" aria-label="Image URL">
+                                    <div class="upload-hint">Max 50KB for file uploads. Use a URL for larger images.
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="form-row">
-                        <div class="form-group flex-1">
-                            <label for="musicSelect">Background Music</label>
-                            <select id="musicSelect">
-                                <option value="none">Silence</option>
-                                <option value="romantic">Romantic Piano</option>
-                                <option value="lofi">Lo-fi Beat</option>
-                                <option value="violin">Emotional Violin</option>
-                                <option value="nature">Night Nature</option>
-                            </select>
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="musicSelect">Background Music</label>
+                                    <select id="musicSelect">
+                                        <option value="none">Silence</option>
+                                        <option value="romantic">Romantic Piano</option>
+                                        <option value="lofi">Lo-fi Beat</option>
+                                        <option value="violin">Emotional Violin</option>
+                                        <option value="nature">Night Nature</option>
+                                    </select>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="couponSelect">Love Coupon</label>
+                                    <select id="couponSelect">
+                                        <option value="none">No Coupon</option>
+                                        <option value="hug">One Giant Hug</option>
+                                        <option value="dinner">Fancy Dinner Date</option>
+                                        <option value="coffee">Coffee Morning</option>
+                                        <option value="movie">Movie Night</option>
+                                        <option value="custom">Blank Gift Voucher</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group flex-1">
-                            <label for="couponSelect">Love Coupon</label>
-                            <select id="couponSelect">
-                                <option value="none">No Coupon</option>
-                                <option value="hug">One Giant Hug</option>
-                                <option value="dinner">Fancy Dinner Date</option>
-                                <option value="coffee">Coffee Morning</option>
-                                <option value="movie">Movie Night</option>
-                                <option value="custom">Blank Gift Voucher</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="editor-section">
-                    <h3 class="section-title">Privacy & Delivery</h3>
-                    <div class="form-row">
-                        <div class="form-group flex-1">
-                            <label for="unlockDate">Unlock Date <span class="label-hint">(Optional)</span></label>
-                            <input type="date" id="unlockDate">
-                        </div>
-                        <div class="form-group flex-1">
-                            <label for="letterPass">Secret Password <span class="label-hint">(Optional)</span></label>
-                            <input type="password" id="letterPass" placeholder="Secret word..." autocomplete="off">
+                        <div class="editor-section">
+                            <h3 class="section-title">Privacy & Delivery</h3>
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="unlockDate">Unlock Date <span
+                                            class="label-hint">(Optional)</span></label>
+                                    <input type="date" id="unlockDate">
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="letterPass">Secret Password <span
+                                            class="label-hint">(Optional)</span></label>
+                                    <input type="password" id="letterPass" placeholder="Secret word..."
+                                        autocomplete="off">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </details>
 
                 <div class="editor-actions">
                     <button class="primary-btn" id="previewBtn">Preview Letter</button>
