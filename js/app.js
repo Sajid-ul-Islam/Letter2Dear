@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('active', isActive);
             btn.setAttribute('aria-checked', isActive);
         });
+        Effects.setThemeEffects(theme);
     };
 
     const setMusic = (type) => {

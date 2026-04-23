@@ -5,6 +5,8 @@
 // Track active intervals for cleanup
 const activeIntervals = [];
 const activeTimeouts = [];
+const atmosphereIntervals = [];
+const themeIntervals = [];
 
 function trackInterval(id) {
     activeIntervals.push(id);
@@ -15,6 +17,18 @@ function trackTimeout(id) {
     activeTimeouts.push(id);
     return id;
 }
+
+const cleanupAtmosphereEffects = () => {
+    atmosphereIntervals.forEach(clearInterval);
+    atmosphereIntervals.length = 0;
+    document.querySelectorAll('.atmosphere-element, .petal-element, .bird-fly').forEach(el => el.remove());
+};
+
+const cleanupThemeEffects = () => {
+    themeIntervals.forEach(clearInterval);
+    themeIntervals.length = 0;
+    document.querySelectorAll('.theme-effect').forEach(el => el.remove());
+};
 
 export const Effects = {
     /** Currently running typewriter — set to a reject fn when active, null when idle */
@@ -101,24 +115,27 @@ export const Effects = {
      * Cleans up previous atmosphere before adding new one.
      */
     setAtmosphere: (type) => {
-        // Clear existing atmosphere elements and intervals
-        document.querySelectorAll('.atmosphere-element, .petal-element, .bird-fly').forEach(el => el.remove());
+        cleanupAtmosphereEffects();
 
         if (type === 'none' || !type) return;
 
+        const createAtmosphere = (generator, interval) => {
+            atmosphereIntervals.push(setInterval(generator, interval));
+        };
+
         if (type === 'rain') {
-            trackInterval(setInterval(() => {
+            createAtmosphere(() => {
                 const drop = document.createElement('div');
                 drop.className = 'atmosphere-element rain-drop';
                 drop.style.left = Math.random() * 100 + 'vw';
                 drop.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
                 document.body.appendChild(drop);
                 trackTimeout(setTimeout(() => drop.remove(), 1200));
-            }, 60));
+            }, 60);
         }
 
         if (type === 'petals') {
-            trackInterval(setInterval(() => {
+            createAtmosphere(() => {
                 const petal = document.createElement('div');
                 petal.className = 'petal-element';
                 const size = 8 + Math.random() * 10;
@@ -130,7 +147,7 @@ export const Effects = {
                 petal.style.background = `hsl(${hue}, 80%, 70%)`;
                 document.body.appendChild(petal);
                 trackTimeout(setTimeout(() => petal.remove(), 14000));
-            }, 300));
+            }, 300);
         }
 
         if (type === 'stars') {
@@ -148,7 +165,7 @@ export const Effects = {
         }
 
         if (type === 'birds') {
-            trackInterval(setInterval(() => {
+            createAtmosphere(() => {
                 const bird = document.createElement('div');
                 bird.className = 'atmosphere-element bird-fly';
                 bird.textContent = '\uD83D\uDD4A\uFE0F';
@@ -157,7 +174,58 @@ export const Effects = {
                 bird.style.animationDuration = dur + 's';
                 document.body.appendChild(bird);
                 trackTimeout(setTimeout(() => bird.remove(), dur * 1000 + 500));
-            }, 4000));
+            }, 4000);
+        }
+    },
+
+    /**
+     * Set theme-specific ambient effects.
+     */
+    setThemeEffects: (theme) => {
+        cleanupThemeEffects();
+
+        const createThemeEffect = (generator, interval) => {
+            themeIntervals.push(setInterval(generator, interval));
+        };
+
+        switch (theme) {
+            case 'academia':
+                createThemeEffect(() => {
+                    const leaf = document.createElement('div');
+                    leaf.className = 'theme-effect falling-leaf';
+                    leaf.innerHTML = '&#127809;'; // 🍂
+                    leaf.style.left = Math.random() * 100 + 'vw';
+                    leaf.style.animationDuration = (8 + Math.random() * 7) + 's';
+                    leaf.style.transform = `scale(${0.8 + Math.random() * 0.5}) rotate(${Math.random() * 360}deg)`;
+                    document.body.appendChild(leaf);
+                    trackTimeout(setTimeout(() => leaf.remove(), 15000));
+                }, 800);
+                break;
+
+            case 'cyberpunk':
+                createThemeEffect(() => {
+                    const char = document.createElement('div');
+                    char.className = 'theme-effect binary-char';
+                    char.textContent = Math.random() > 0.5 ? '0' : '1';
+                    char.style.left = Math.random() * 100 + 'vw';
+                    char.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    document.body.appendChild(char);
+                    trackTimeout(setTimeout(() => char.remove(), 7000));
+                }, 100);
+                break;
+
+            case 'minimalist':
+                createThemeEffect(() => {
+                    const line = document.createElement('div');
+                    line.className = 'theme-effect minimal-line';
+                    line.style.left = Math.random() * 100 + 'vw';
+                    line.style.width = (50 + Math.random() * 100) + 'px';
+                    line.style.animationDuration = (10 + Math.random() * 10) + 's';
+                    line.style.transform = `rotate(${Math.random() * 90 - 45}deg)`;
+                    document.body.appendChild(line);
+                    trackTimeout(setTimeout(() => line.remove(), 20000));
+                }, 1200);
+                break;
         }
     },
 
@@ -169,6 +237,8 @@ export const Effects = {
         activeTimeouts.forEach(clearTimeout);
         activeIntervals.length = 0;
         activeTimeouts.length = 0;
-        document.querySelectorAll('.heart, .firefly, .atmosphere-element, .petal-element, .bird-fly').forEach(el => el.remove());
+        document.querySelectorAll('.heart, .firefly').forEach(el => el.remove());
+        cleanupAtmosphereEffects();
+        cleanupThemeEffects();
     }
 };

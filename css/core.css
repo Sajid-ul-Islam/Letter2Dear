@@ -18,7 +18,9 @@
 }
 
 /* Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -40,9 +42,17 @@ body {
 }
 
 @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* ============================================
@@ -57,7 +67,10 @@ body {
     z-index: 5;
 }
 
-.flex-1 { flex: 1; min-width: 0; }
+.flex-1 {
+    flex: 1;
+    min-width: 0;
+}
 
 /* ============================================
    Glassmorphism Card System
@@ -89,8 +102,15 @@ body {
 }
 
 @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .header-decoration {
@@ -100,7 +120,9 @@ body {
     gap: 0.8rem;
 }
 
-.flower { font-size: 1.5rem; }
+.flower {
+    font-size: 1.5rem;
+}
 
 .title {
     font-size: clamp(2.4rem, 6vw, 4rem);
@@ -144,8 +166,15 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 .welcome-title {
@@ -230,7 +259,11 @@ body {
     position: relative;
 }
 
-textarea, input[type="password"], input[type="date"], input[type="url"], select {
+textarea,
+input[type="password"],
+input[type="date"],
+input[type="url"],
+select {
     width: 100%;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--glass-border);
@@ -257,7 +290,9 @@ textarea {
     line-height: 1.8;
 }
 
-textarea:focus, input:focus, select:focus {
+textarea:focus,
+input:focus,
+select:focus {
     outline: none;
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
@@ -274,8 +309,15 @@ textarea:focus, input:focus, select:focus {
     transition: opacity var(--transition-fast);
 }
 
-.char-count.near-limit { opacity: 0.8; color: #ffc371; }
-.char-count.at-limit { opacity: 1; color: #ff5f6d; }
+.char-count.near-limit {
+    opacity: 0.8;
+    color: #ffc371;
+}
+
+.char-count.at-limit {
+    opacity: 1;
+    color: #ff5f6d;
+}
 
 .upload-wrapper {
     display: flex;
@@ -421,7 +463,9 @@ textarea:focus, input:focus, select:focus {
     font-size: 0.95rem;
 }
 
-.social-btn:hover { transform: translateY(-2px); }
+.social-btn:hover {
+    transform: translateY(-2px);
+}
 
 .start-btn {
     background: var(--primary-gradient);
@@ -460,7 +504,9 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ============================================
@@ -481,15 +527,34 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes slideUp {
-    from { transform: translateY(15px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(15px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.whatsapp-btn { background: #25D366; box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3); }
-.telegram-btn { background: #0088cc; box-shadow: 0 6px 18px rgba(0, 136, 204, 0.3); }
+.whatsapp-btn {
+    background: #25D366;
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
+}
 
-.whatsapp-btn:hover { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
-.telegram-btn:hover { box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4); }
+.telegram-btn {
+    background: #0088cc;
+    box-shadow: 0 6px 18px rgba(0, 136, 204, 0.3);
+}
+
+.whatsapp-btn:hover {
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+.telegram-btn:hover {
+    box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+}
 
 .share-status {
     margin-top: 1.2rem;
@@ -539,8 +604,13 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-card {
@@ -552,15 +622,25 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes scaleIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .modal-card:hover {
     transform: none;
 }
 
-.modal-icon { font-size: 3rem; margin-bottom: 1rem; }
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
 
 .modal-desc {
     opacity: 0.7;
@@ -609,9 +689,14 @@ textarea:focus, input:focus, select:focus {
     padding: 3.5rem 2rem;
 }
 
-.locked-card:hover { transform: none; }
+.locked-card:hover {
+    transform: none;
+}
 
-.lock-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+.lock-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
 
 .unlock-countdown {
     font-size: 2.2rem;
@@ -641,8 +726,15 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes letterReveal {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .letter-content {
@@ -650,7 +742,9 @@ textarea:focus, input:focus, select:focus {
     position: relative;
 }
 
-.letter-content:hover { transform: none; }
+.letter-content:hover {
+    transform: none;
+}
 
 .letter-text {
     min-height: 100px;
@@ -696,8 +790,15 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 /* Progress Bar */
@@ -806,8 +907,15 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: rotate(-2deg) translateY(20px); }
-    to { opacity: 1; transform: rotate(-2deg) translateY(0); }
+    from {
+        opacity: 0;
+        transform: rotate(-2deg) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate(-2deg) translateY(0);
+    }
 }
 
 .polaroid-frame::before {
@@ -857,7 +965,8 @@ textarea:focus, input:focus, select:focus {
     animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.coupon-card::before, .coupon-card::after {
+.coupon-card::before,
+.coupon-card::after {
     content: '';
     position: absolute;
     width: 22px;
@@ -868,8 +977,13 @@ textarea:focus, input:focus, select:focus {
     transform: translateY(-50%);
 }
 
-.coupon-card::before { left: -13px; }
-.coupon-card::after { right: -13px; }
+.coupon-card::before {
+    left: -13px;
+}
+
+.coupon-card::after {
+    right: -13px;
+}
 
 .coupon-tag {
     display: inline-block;
@@ -890,10 +1004,23 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes bounceIn {
-    0% { transform: scale(0.3); opacity: 0; }
-    50% { transform: scale(1.05); opacity: 1; }
-    70% { transform: scale(0.95); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    70% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* ============================================
@@ -973,18 +1100,39 @@ textarea:focus, input:focus, select:focus {
     animation: toastIn 0.3s ease, toastOut 0.3s ease 3.5s forwards;
 }
 
-.toast.toast-success { border-left: 3px solid #43e97b; }
-.toast.toast-error { border-left: 3px solid #ff5f6d; }
-.toast.toast-info { border-left: 3px solid #00b4db; }
+.toast.toast-success {
+    border-left: 3px solid #43e97b;
+}
+
+.toast.toast-error {
+    border-left: 3px solid #ff5f6d;
+}
+
+.toast.toast-info {
+    border-left: 3px solid #00b4db;
+}
 
 @keyframes toastIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 @keyframes toastOut {
-    from { opacity: 1; }
-    to { opacity: 0; transform: translateY(10px); }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
 }
 
 /* ============================================
@@ -1013,8 +1161,15 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
-    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 /* Firefly */
@@ -1032,17 +1187,37 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes fireflyGlow {
-    0%, 100% { opacity: 0; transform: translate(0, 0); }
-    25% { opacity: 0.8; }
-    50% { opacity: 0.4; transform: translate(30px, -20px); }
-    75% { opacity: 0.7; transform: translate(-10px, -40px); }
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translate(0, 0);
+    }
+
+    25% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: translate(30px, -20px);
+    }
+
+    75% {
+        opacity: 0.7;
+        transform: translate(-10px, -40px);
+    }
 }
 
 /* ============================================
    Atmosphere Effects
    ============================================ */
 
-.atmosphere-element { position: fixed; pointer-events: none; z-index: 1; }
+.atmosphere-element {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+}
 
 /* Rain */
 .rain-drop {
@@ -1053,8 +1228,15 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes rainFall {
-    0% { transform: translateY(-20px); opacity: 1; }
-    100% { transform: translateY(110vh); opacity: 0; }
+    0% {
+        transform: translateY(-20px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
 }
 
 /* Stars */
@@ -1067,8 +1249,16 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes twinkle {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; transform: scale(1.5); }
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
 }
 
 /* Petals */
@@ -1086,9 +1276,20 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes petalFall {
-    0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.6; }
-    50% { transform: translateY(50vh) rotate(360deg) translateX(50px); opacity: 0.5; }
-    100% { transform: translateY(110vh) rotate(720deg) translateX(-20px); opacity: 0; }
+    0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translateY(50vh) rotate(360deg) translateX(50px);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(720deg) translateX(-20px);
+        opacity: 0;
+    }
 }
 
 /* Birds */
@@ -1102,23 +1303,131 @@ textarea:focus, input:focus, select:focus {
 }
 
 @keyframes birdFly {
-    0% { transform: translateX(0); opacity: 0; }
-    10% { opacity: 0.8; }
-    90% { opacity: 0.8; }
-    100% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    90% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 100px));
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   Theme-Specific Animations
+   ============================================ */
+
+/* Academia - Falling Leaf */
+.falling-leaf {
+    position: fixed;
+    top: -30px;
+    font-size: 1.5rem;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 2;
+    animation: leafFall linear forwards;
+    color: #c0a080;
+    /* Sepia-like color */
+}
+
+@keyframes leafFall {
+    0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(720deg) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* Cyberpunk - Binary Rain */
+.binary-char {
+    position: fixed;
+    top: -20px;
+    font-family: monospace;
+    color: #00ff41;
+    /* Glitch green */
+    font-size: 1rem;
+    pointer-events: none;
+    z-index: 2;
+    animation: binaryFall linear forwards;
+    text-shadow: 0 0 5px #00ff41;
+}
+
+@keyframes binaryFall {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+/* Minimalist - Floating Lines */
+.minimal-line {
+    position: fixed;
+    bottom: -50px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    z-index: 2;
+    animation: minimalFloat linear forwards;
+}
+
+@keyframes minimalFloat {
+    from {
+        transform: translateY(0) rotate(0);
+        opacity: 0.3;
+    }
+
+    to {
+        transform: translateY(-110vh) rotate(180deg);
+        opacity: 0;
+    }
 }
 
 /* ============================================
    Font Utilities
    ============================================ */
 
-.font-atma { font-family: 'Atma', cursive; }
-.font-dancing { font-family: 'Dancing Script', cursive; }
-.font-dancing .paragraph { font-size: 2.2rem; }
-.font-playwrite { font-family: 'Playwrite AU SA', serif; }
-.font-playwrite .paragraph { font-size: 1.5rem; }
-.font-outfit { font-family: 'Outfit', sans-serif; }
-.font-outfit .paragraph { font-size: 1.4rem; }
+.font-atma {
+    font-family: 'Atma', cursive;
+}
+
+.font-dancing {
+    font-family: 'Dancing Script', cursive;
+}
+
+.font-dancing .paragraph {
+    font-size: 2.2rem;
+}
+
+.font-playwrite {
+    font-family: 'Playwrite AU SA', serif;
+}
+
+.font-playwrite .paragraph {
+    font-size: 1.5rem;
+}
+
+.font-outfit {
+    font-family: 'Outfit', sans-serif;
+}
+
+.font-outfit .paragraph {
+    font-size: 1.4rem;
+}
 
 /* ============================================
    Footer
@@ -1139,46 +1448,83 @@ textarea:focus, input:focus, select:focus {
    ============================================ */
 
 @media (max-width: 768px) {
-    .container { padding: 0.5rem; }
+    .container {
+        padding: 0.5rem;
+    }
 
-    .header { padding: 2rem 1rem 1rem; }
+    .header {
+        padding: 2rem 1rem 1rem;
+    }
 
-    .editor-card { padding: 1.8rem 1.2rem; }
+    .editor-card {
+        padding: 1.8rem 1.2rem;
+    }
 
     .editor-actions {
         flex-direction: column;
     }
 
-    .primary-btn { width: 100%; }
+    .primary-btn {
+        width: 100%;
+    }
 
-    .share-options { flex-direction: column; }
+    .share-options {
+        flex-direction: column;
+    }
 
-    .form-row { flex-direction: column; gap: 0.8rem; }
+    .form-row {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
 
     .paragraph {
         font-size: 1.4rem;
         padding-left: 1rem;
     }
 
-    .letter-content { padding: 1.5rem; }
+    .letter-content {
+        padding: 1.5rem;
+    }
 
-    .keyboard-hints { display: none; }
+    .keyboard-hints {
+        display: none;
+    }
 
-    .modal-card { padding: 2rem 1.5rem; }
+    .modal-card {
+        padding: 2rem 1.5rem;
+    }
 
-    .envelope { width: 260px; height: 180px; }
+    .envelope {
+        width: 260px;
+        height: 180px;
+    }
 
-    .polaroid-frame { width: 240px; }
+    .polaroid-frame {
+        width: 240px;
+    }
 
-    .welcome-banner { padding: 1.5rem 0.5rem; }
+    .welcome-banner {
+        padding: 1.5rem 0.5rem;
+    }
 
-    .locked-card { padding: 2.5rem 1.5rem; }
+    .locked-card {
+        padding: 2.5rem 1.5rem;
+    }
 }
 
 @media (max-width: 380px) {
-    .title { font-size: 2rem; }
-    .editor-card { padding: 1.2rem 0.8rem; }
-    .theme-btn { padding: 8px 14px; font-size: 0.75rem; }
+    .title {
+        font-size: 2rem;
+    }
+
+    .editor-card {
+        padding: 1.2rem 0.8rem;
+    }
+
+    .theme-btn {
+        padding: 8px 14px;
+        font-size: 0.75rem;
+    }
 }
 
 /* ============================================
@@ -1186,14 +1532,23 @@ textarea:focus, input:focus, select:focus {
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
 
-    body { animation: none; background-size: 100% 100%; }
-    .glass-card:hover { transform: none; }
+    body {
+        animation: none;
+        background-size: 100% 100%;
+    }
+
+    .glass-card:hover {
+        transform: none;
+    }
 }
 
 /* ============================================
@@ -1201,6 +1556,7 @@ textarea:focus, input:focus, select:focus {
    ============================================ */
 
 @media print {
+
     .background-animation,
     .header-actions,
     .editor-actions,
@@ -1208,9 +1564,23 @@ textarea:focus, input:focus, select:focus {
     .reaction-bar,
     .skip-btn,
     .keyboard-hints,
-    .toast-container { display: none !important; }
+    .toast-container {
+        display: none !important;
+    }
 
-    body { background: white; color: #333; }
-    .glass-card { background: white; border: 1px solid #ccc; box-shadow: none; }
-    .paragraph { opacity: 1 !important; transform: none !important; }
+    body {
+        background: white;
+        color: #333;
+    }
+
+    .glass-card {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+
+    .paragraph {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
