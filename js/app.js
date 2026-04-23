@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shareOptions: $('shareOptions'),
         whatsappBtn: $('whatsappBtn'),
         telegramBtn: $('telegramBtn'),
+        twitterBtn: $('twitterBtn'),
         pageTitle: $('pageTitle'),
         pageSubtitle: $('pageSubtitle'),
         countdownTimer: $('countdownTimer'),
@@ -30,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar: $('progressBar'),
         letterProgress: $('letterProgress'),
         skipBtn: $('skipBtn'),
+        printBtn: $('printBtn'),
+        clearDraftBtn: $('clearDraftBtn'),
         // Password modal
         passwordModal: $('passwordModal'),
         passwordInput: $('passwordInput'),
@@ -226,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.startBtn.textContent = 'Reading...';
         el.startBtn.classList.add('loading');
         el.skipBtn.style.display = 'block';
+        if (el.printBtn) el.printBtn.style.display = 'none';
 
         const total = paragraphs.length;
 
@@ -248,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.startBtn.textContent = 'Read Again';
         el.startBtn.classList.remove('loading');
         el.skipBtn.style.display = 'none';
+        if (el.printBtn) el.printBtn.style.display = 'block';
         state.isAnimating = false;
     };
 
@@ -263,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.startBtn.textContent = 'Read Again';
         el.startBtn.classList.remove('loading');
         el.skipBtn.style.display = 'none';
+        if (el.printBtn) el.printBtn.style.display = 'block';
         state.isAnimating = false;
     };
 
@@ -327,6 +333,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const text = encodeURIComponent('I have written a special letter for you...');
                 window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${text}`, '_blank');
             };
+
+            if (el.twitterBtn) {
+                el.twitterBtn.onclick = () => {
+                    const text = encodeURIComponent('I have written a special letter for you...\n\nRead it here: ' + shareUrl);
+                    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+                };
+            }
 
             Utils.clearDraft();
         } else {
@@ -422,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const audio = $('bgMusic');
             if (audio && audio.src) {
-                audio.play().catch(() => {}); // autoplay policy
+                audio.play().catch(() => { }); // autoplay policy
             }
 
             setTimeout(() => {
@@ -513,6 +526,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Skip animation
         el.skipBtn?.addEventListener('click', skipAnimation);
+
+        // Print / Save as PDF
+        el.printBtn?.addEventListener('click', () => window.print());
+
+        // Clear Draft
+        el.clearDraftBtn?.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear your letter draft?')) {
+                el.letterInput.value = '';
+                Utils.clearDraft();
+                updateCharCount();
+                Utils.showToast('Draft cleared.', 'success');
+            }
+        });
 
         // Generate link
         el.generateLinkBtn?.addEventListener('click', async () => {

@@ -1,8 +1,12 @@
 const express = require('express');
 const path = require('path');
+const compression = require('compression');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+// Compress all responses
+app.use(compression());
 
 // Security headers
 app.use((req, res, next) => {

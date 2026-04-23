@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ToMyInfida - Create Beautiful Love Letters</title>
-    <meta name="description" content="Create and share beautifully animated, encrypted love letters with themes, music, and special effects.">
+    <meta name="description"
+        content="Create and share beautifully animated, encrypted love letters with themes, music, and special effects.">
 
     <!-- PWA & Mobile Optimization -->
     <link rel="manifest" href="manifest.json">
@@ -50,8 +51,10 @@
             <p class="subtitle" id="pageSubtitle">For My Love</p>
 
             <div class="header-actions">
-                <button class="start-btn" id="startBtn" style="display: none;" aria-label="Start reading the letter">Begin Your Journey</button>
-                <button class="secondary-btn" id="backToEditor" style="display: none;" aria-label="Go back to editor">Edit Letter</button>
+                <button class="start-btn" id="startBtn" style="display: none;"
+                    aria-label="Start reading the letter">Begin Your Journey</button>
+                <button class="secondary-btn" id="backToEditor" style="display: none;"
+                    aria-label="Go back to editor">Edit Letter</button>
             </div>
         </header>
 
@@ -62,15 +65,18 @@
                 <div class="welcome-banner" id="welcomeBanner">
                     <div class="welcome-icon" aria-hidden="true">💌</div>
                     <h2 class="welcome-title">Create Your Love Letter</h2>
-                    <p class="welcome-text">Write something heartfelt, pick a theme, and share it with someone special.</p>
+                    <p class="welcome-text">Write something heartfelt, pick a theme, and share it with someone special.
+                    </p>
                 </div>
 
                 <div class="editor-section">
                     <h3 class="section-title">The Message</h3>
                     <div class="form-group">
-                        <label for="letterInput">Your Message <span class="label-hint">(Bengali & English supported)</span></label>
+                        <label for="letterInput">Your Message <span class="label-hint">(Bengali & English
+                                supported)</span></label>
                         <div class="textarea-wrapper">
-                            <textarea id="letterInput" placeholder="Write your heart out here..." rows="6" maxlength="5000" aria-describedby="charCount"></textarea>
+                            <textarea id="letterInput" placeholder="Write your heart out here..." rows="6"
+                                maxlength="5000" aria-describedby="charCount"></textarea>
                             <span class="char-count" id="charCount">0 / 5000</span>
                         </div>
                     </div>
@@ -81,15 +87,33 @@
                     <div class="form-group">
                         <label>Choose a Theme</label>
                         <div class="theme-selector" role="radiogroup" aria-label="Letter theme">
-                            <button class="theme-btn active" data-theme="default" style="background: linear-gradient(-45deg, #2d1b4e, #702f4e);" role="radio" aria-checked="true">Midnight</button>
-                            <button class="theme-btn" data-theme="sunset" style="background: linear-gradient(135deg, #ff5f6d, #ffc371);" role="radio" aria-checked="false">Sunset</button>
-                            <button class="theme-btn" data-theme="ocean" style="background: linear-gradient(135deg, #2193b0, #6dd5ed);" role="radio" aria-checked="false">Ocean</button>
-                            <button class="theme-btn" data-theme="forest" style="background: linear-gradient(135deg, #11998e, #38ef7d);" role="radio" aria-checked="false">Forest</button>
-                            <button class="theme-btn" data-theme="lavender" style="background: linear-gradient(135deg, #834d9b, #d04ed6);" role="radio" aria-checked="false">Lavender</button>
-                            <button class="theme-btn" data-theme="rose" style="background: linear-gradient(135deg, #ff0844, #ffb199);" role="radio" aria-checked="false">Rose</button>
-                            <button class="theme-btn" data-theme="galaxy" style="background: linear-gradient(135deg, #0f0c29, #302b63);" role="radio" aria-checked="false">Galaxy</button>
-                            <button class="theme-btn" data-theme="sakura" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);" role="radio" aria-checked="false">Sakura</button>
-                            <button class="theme-btn" data-theme="vintage" style="background: linear-gradient(135deg, #d4ae8d, #e9d5ca);" role="radio" aria-checked="false">Vintage</button>
+                            <button class="theme-btn active" data-theme="default"
+                                style="background: linear-gradient(-45deg, #2d1b4e, #702f4e);" role="radio"
+                                aria-checked="true">Midnight</button>
+                            <button class="theme-btn" data-theme="sunset"
+                                style="background: linear-gradient(135deg, #ff5f6d, #ffc371);" role="radio"
+                                aria-checked="false">Sunset</button>
+                            <button class="theme-btn" data-theme="ocean"
+                                style="background: linear-gradient(135deg, #2193b0, #6dd5ed);" role="radio"
+                                aria-checked="false">Ocean</button>
+                            <button class="theme-btn" data-theme="forest"
+                                style="background: linear-gradient(135deg, #11998e, #38ef7d);" role="radio"
+                                aria-checked="false">Forest</button>
+                            <button class="theme-btn" data-theme="lavender"
+                                style="background: linear-gradient(135deg, #834d9b, #d04ed6);" role="radio"
+                                aria-checked="false">Lavender</button>
+                            <button class="theme-btn" data-theme="rose"
+                                style="background: linear-gradient(135deg, #ff0844, #ffb199);" role="radio"
+                                aria-checked="false">Rose</button>
+                            <button class="theme-btn" data-theme="galaxy"
+                                style="background: linear-gradient(135deg, #0f0c29, #302b63);" role="radio"
+                                aria-checked="false">Galaxy</button>
+                            <button class="theme-btn" data-theme="sakura"
+                                style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);" role="radio"
+                                aria-checked="false">Sakura</button>
+                            <button class="theme-btn" data-theme="vintage"
+                                style="background: linear-gradient(135deg, #d4ae8d, #e9d5ca);" role="radio"
+                                aria-checked="false">Vintage</button>
                         </div>
                     </div>
 
@@ -121,8 +145,10 @@
                     <div class="form-group">
                         <label>Polaroid Memory</label>
                         <div class="upload-wrapper">
-                            <input type="file" id="imageUpload" accept="image/*" class="file-input" aria-label="Upload a photo">
-                            <input type="url" id="imageUrl" placeholder="Or paste an image link..." class="url-input" aria-label="Image URL">
+                            <input type="file" id="imageUpload" accept="image/*" class="file-input"
+                                aria-label="Upload a photo">
+                            <input type="url" id="imageUrl" placeholder="Or paste an image link (e.g. Imgur)..."
+                                class="url-input" aria-label="Image URL">
                             <div class="upload-hint">Max 50KB for file uploads. Use a URL for larger images.</div>
                         </div>
                     </div>
@@ -168,6 +194,8 @@
 
                 <div class="editor-actions">
                     <button class="primary-btn" id="previewBtn">Preview Letter</button>
+                    <button class="secondary-btn" id="clearDraftBtn" aria-label="Clear current draft">Clear
+                        Draft</button>
                     <button class="primary-btn share-btn" id="generateLinkBtn">
                         <span class="btn-text">Shorten & Copy Link</span>
                         <span class="btn-loader" style="display:none;" aria-hidden="true"></span>
@@ -181,6 +209,10 @@
                     <button class="social-btn telegram-btn" id="telegramBtn" aria-label="Share via Telegram">
                         <span class="btn-icon" aria-hidden="true">✈️</span> Telegram
                     </button>
+                    <button class="social-btn twitter-btn" id="twitterBtn" aria-label="Share via X (Twitter)"
+                        style="background: #0f1419; color: #fff;">
+                        <span class="btn-icon" aria-hidden="true">𝕏</span> Post
+                    </button>
                 </div>
 
                 <div id="shareStatus" class="share-status" role="status" aria-live="polite"></div>
@@ -193,13 +225,15 @@
         </main>
 
         <!-- Password Modal -->
-        <div class="modal-overlay" id="passwordModal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="passwordModalTitle">
+        <div class="modal-overlay" id="passwordModal" style="display: none;" role="dialog" aria-modal="true"
+            aria-labelledby="passwordModalTitle">
             <div class="glass-card modal-card">
                 <div class="modal-icon" aria-hidden="true">🔐</div>
                 <h2 id="passwordModalTitle">This letter is protected</h2>
                 <p class="modal-desc">Enter the secret word to unlock it.</p>
                 <div class="form-group">
-                    <input type="password" id="passwordInput" placeholder="Secret word..." class="modal-input" autocomplete="off" aria-label="Password">
+                    <input type="password" id="passwordInput" placeholder="Secret word..." class="modal-input"
+                        autocomplete="off" aria-label="Password">
                 </div>
                 <div class="modal-error" id="passwordError" role="alert"></div>
                 <div class="modal-actions">
@@ -252,15 +286,20 @@
                     </div>
                 </div>
 
-                <button class="skip-btn" id="skipBtn" style="display: none;" aria-label="Skip animation">Skip Animation</button>
+                <button class="skip-btn" id="skipBtn" style="display: none;" aria-label="Skip animation">Skip
+                    Animation</button>
+                <button class="secondary-btn print-btn" id="printBtn" style="display: none; margin: 15px auto;"
+                    aria-label="Save as PDF">🖨️ Save as PDF</button>
 
                 <div class="reaction-bar" id="reactionBar" style="display: none;">
                     <p>Send a Reaction:</p>
                     <div class="reaction-btns">
                         <button class="react-btn" data-reply="I love you too!" aria-label="Heart reaction">❤️</button>
-                        <button class="react-btn" data-reply="That's so sweet!" aria-label="Touched reaction">🥹</button>
+                        <button class="react-btn" data-reply="That's so sweet!"
+                            aria-label="Touched reaction">🥹</button>
                         <button class="react-btn" data-reply="Meet me soon!" aria-label="Coffee reaction">☕</button>
-                        <button class="react-btn" data-reply="Can't wait to see you!" aria-label="Love eyes reaction">😍</button>
+                        <button class="react-btn" data-reply="Can't wait to see you!"
+                            aria-label="Love eyes reaction">😍</button>
                     </div>
                 </div>
             </div>
@@ -276,7 +315,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(() => {});
+                navigator.serviceWorker.register('/sw.js').catch(() => { });
             });
         }
     </script>
